@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkMe.WebAPI", "MarkMe.WebAPI\MarkMe.WebAPI.csproj", "{50003E36-331B-400C-9606-47CAA3167E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkMe.Database", "MarkMe.Database\MarkMe.Database.csproj", "{C815C4BA-FA94-4BBE-B2F1-2C8EBB8B95B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkMe.Core", "MarkMe.Core\MarkMe.Core.csproj", "{7EA123B1-438C-41D3-997C-27B611D9F13F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50003E36-331B-400C-9606-47CAA3167E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50003E36-331B-400C-9606-47CAA3167E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50003E36-331B-400C-9606-47CAA3167E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50003E36-331B-400C-9606-47CAA3167E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C815C4BA-FA94-4BBE-B2F1-2C8EBB8B95B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C815C4BA-FA94-4BBE-B2F1-2C8EBB8B95B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C815C4BA-FA94-4BBE-B2F1-2C8EBB8B95B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C815C4BA-FA94-4BBE-B2F1-2C8EBB8B95B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA123B1-438C-41D3-997C-27B611D9F13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA123B1-438C-41D3-997C-27B611D9F13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA123B1-438C-41D3-997C-27B611D9F13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA123B1-438C-41D3-997C-27B611D9F13F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
