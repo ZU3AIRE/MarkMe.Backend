@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\MarkMe.Core\MarkMe.Core.csproj" />
+    <ProjectReference Include="..\MarkMe.Database\MarkMe.Database.csproj" />
   </ItemGroup>
 
 </Project>
