@@ -8,6 +8,7 @@ namespace MarkMe.Core
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<ICourse, CourseService>();
+            services.AddScoped<IStudent, StudentService>();
             return services;
         }
     }
