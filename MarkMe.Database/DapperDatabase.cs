@@ -1,7 +1,10 @@
-using Dapper;
-using MarkMe.Database.Interface;
-using Microsoft.Data.SqlClient;
 using System.Data;
+
+using Dapper;
+
+using MarkMe.Database.Interface;
+
+using Microsoft.Data.SqlClient;
 
 
 namespace MarkMe.Database

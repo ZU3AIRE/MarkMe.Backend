@@ -1,5 +1,4 @@
-﻿using MarkMe.Core;
-using MarkMe.Core.Interface;
+﻿using MarkMe.Core.Interface;
 using MarkMe.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 
