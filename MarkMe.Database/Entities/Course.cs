@@ -9,25 +9,18 @@ namespace MarkMe.Database.Entities
     {
         public int CourseId { get; set; }
 
-        [StringLength(6)]
+        [StringLength(6, ErrorMessage = "Code cannot be longer than 6 characters.")]
         public string Code { get; set; } = string.Empty;
 
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "Title cannot be longer than 50 characters.")]
         public string Title { get; set; } = string.Empty;
         public CourseType Type { get; set; }
-
-        [StringLength(50)]
         public int Semester { get; set; }
-
         public int CreditHours { get; set; }
-        public int CreditPerHoursWeek { get; set; }
+        public int CreditHoursPerWeek { get; set; }
         public bool IsArchived { get; set; }
-
 
         [ForeignKey("User")]
         public int AssignedTo { get; set; }
-
-        [ForeignKey("User")]
-        public string TeacherId { get; set; }
     }
 }

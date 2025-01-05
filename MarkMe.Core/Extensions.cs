@@ -1,4 +1,7 @@
-﻿using MarkMe.Core.Interface;
+﻿using MarkMe.Core.Repositories;
+using MarkMe.Core.Repositories.Interface;
+using MarkMe.Core.Services;
+using MarkMe.Core.Services.Interface;
 using MarkMe.Database;
 
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +13,9 @@ namespace MarkMe.Core
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ICourse, CourseService>();
-            services.AddScoped<IStudent, StudentService>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IStudentService, StudentService>();
             return services;
         }
 

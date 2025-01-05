@@ -1,10 +1,10 @@
-﻿using MarkMe.Core.Interface;
+﻿using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Entities;
 using MarkMe.Database.Interface;
 
-namespace MarkMe.Core
+namespace MarkMe.Core.Services
 {
-    public class StudentService(IDatabase _database) : IStudent
+    public class StudentService(IDatabase _database) : IStudentService
     {
         public async Task<Student> Add(Student obj)
         {

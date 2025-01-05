@@ -1,24 +1,24 @@
-﻿using MarkMe.Core.Interface;
-using MarkMe.Database.Entities;
+﻿using MarkMe.Core.DTOs;
+using MarkMe.Core.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CourseController(ICourse _courseService) : ControllerBase
+    public class CourseController(ICourseService _courseService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Course>>> GetAllCourses()
+        public async Task<ActionResult<IEnumerable<CourseDTO>>> GetAllCourses()
         {
-            var courses = await _courseService.GetAll();
+            var courses = await _courseService.GetAllAsync();
             return Ok(courses);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetCourseById(int id)
+        public async Task<ActionResult<CourseDTO>> GetCourseById(int id)
         {
-            var course = await _courseService.Get(id);
+            var course = await _courseService.GetAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -27,29 +27,27 @@ namespace MarkMe.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Course>> CreateCourse([FromBody] Course course)
+        public async Task<ActionResult<CourseDTO>> CreateCourse(CreateCourseDTO course)
         {
-            var createdCourse = await _courseService.Add(course);
+            var createdCourse = await _courseService.AddAsync(course);
             return CreatedAtAction(nameof(GetCourseById), new { id = createdCourse.CourseId }, createdCourse);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourse(int id, [FromBody] Course course)
+        public async Task<IActionResult> UpdateCourse(int id, CourseDTO course)
         {
             if (id != course.CourseId)
             {
                 return BadRequest();
             }
 
-            await _courseService.Update(id, course);
-            return NoContent();
+            return Ok(await _courseService.UpdateAsync(course));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            await _courseService.Delete(id);
-            return NoContent();
+            return Ok(await _courseService.DeleteAsync(id));
         }
     }
 }

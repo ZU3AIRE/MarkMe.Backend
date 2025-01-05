@@ -1,4 +1,4 @@
-﻿using MarkMe.Core.Interface;
+﻿using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +6,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class StudentController(IStudent _studentService) : ControllerBase
+    public class StudentController(IStudentService _studentService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
