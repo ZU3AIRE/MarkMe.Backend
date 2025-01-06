@@ -14,8 +14,11 @@ namespace MarkMe.Core
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ICRRepository, CRRepository>();
+
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICRService, CRService>();
             return services;
         }
 
