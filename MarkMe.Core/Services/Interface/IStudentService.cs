@@ -1,13 +1,14 @@
-﻿using MarkMe.Database.Entities;
+﻿using MarkMe.Core.DTOs;
+using MarkMe.Database.Entities;
 
 namespace MarkMe.Core.Services.Interface
 {
     public interface IStudentService
     {
-        Task<Student?> Get(int id);
-        Task<IEnumerable<Student>> GetAll();
-        Task Update(int id, Student updatedObj);
-        Task Delete(int id);
-        Task<Student> Add(Student obj);
+        Task<StudentDTO?> GetAsync(int id);
+        Task<IEnumerable<StudentDTO>> GetAllAsync();
+        Task<StudentDTO> UpdateAsync(StudentDTO updatedObj);
+        Task<bool> DeleteAsync(int id);
+        Task<StudentDTO> AddAsync(CreateStudentDTO obj);
     }
 }

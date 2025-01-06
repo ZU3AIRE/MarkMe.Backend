@@ -1,68 +1,47 @@
-﻿using MarkMe.Core.Services.Interface;
+﻿using MarkMe.Core.DTOs;
+using MarkMe.Core.Repositories.Interface;
+using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Entities;
 using MarkMe.Database.Interface;
 
 namespace MarkMe.Core.Services
 {
-    public class StudentService(IDatabase _database) : IStudentService
+    public class StudentService(IStudentRepository _studRepo) : IStudentService
     {
-        public async Task<Student> Add(Student obj)
+        public async Task<StudentDTO> AddAsync(CreateStudentDTO obj)
         {
-            var sql = "INSERT INTO Students (CollegeRollNo, UniversityRollNo, RegistrationNo, FirstName, LastName, Session, Section, IsDeleted) " +
-                "VALUES (@CollegeRollNo, @UniversityRollNo, @RegistrationNo, @FirstName, @LastName, @Session, @Section, @IsDeleted); " +
-                "SELECT SCOPE_IDENTITY()";
-
-            obj.StudentId = await _database.QuerySingleAsync<int>(sql, new
+            var student = new StudentDTO
             {
-                obj.CollegeRollNo,
-                obj.UniversityRollNo,
-                obj.RegistrationNo,
-                obj.FirstName,
-                obj.LastName,
-                obj.Session,
-                obj.Section,
-                obj.IsDeleted,
-            });
-            return obj;
+                CollegeRollNo = obj.CollegeRollNo,
+                UniversityRollNo = obj.UniversityRollNo,
+                RegistrationNo = obj.RegistrationNo,
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                Session = obj.Session,
+                Section = obj.Section
+            };
+            var stcd = await _studRepo.AddStudentAsync(student);
+            return stcd;
         }
 
-        public async Task Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var sql = "DELETE FROM Students WHERE StudentId = @Id";
-            await _database.ExecuteAsync(sql, new { Id = id });
+            return await _studRepo.DeleteStudentAsync(id);
         }
 
-        public async Task<Student?> Get(int id)
+        public async Task<StudentDTO?> GetAsync(int id)
         {
-            var sql = "SELECT * FROM Students WHERE StudentId = @Id";
-            return await _database.QuerySingleAsync<Student>(sql, new { Id = id });
+            return await _studRepo.GetStudentAsync(id);
         }
 
-        public Task<IEnumerable<Student>> GetAll()
+        public Task<IEnumerable<StudentDTO>> GetAllAsync()
         {
-            var sql = "SELECT * FROM Students";
-            return _database.QueryAsync<Student>(sql);
+            return _studRepo.GetAllStudentsAsync();
         }
 
-        public Task Update(int id, Student updatedObj)
+        public Task<StudentDTO> UpdateAsync(StudentDTO updatedObj)
         {
-            var sql = "UPDATE Students " +
-                      "SET " +
-                        "CollegeRollNo = @CollegeRollNo, UniversityRollNo = @UniversityRollNo, RegistrationNo = @RegistrationNo, " +
-                        "FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section, IsDeleted = @IsDeleted " +
-                      "WHERE StudentId = @Id";
-            return _database.ExecuteAsync(sql, new
-            {
-                updatedObj.CollegeRollNo,
-                updatedObj.UniversityRollNo,
-                updatedObj.RegistrationNo,
-                updatedObj.FirstName,
-                updatedObj.LastName,
-                updatedObj.Session,
-                updatedObj.Section,
-                updatedObj.IsDeleted,
-                Id = id
-            });
+            return _studRepo.UpdateStudentAsync(updatedObj.StudentId ,updatedObj);
         }
     }
 }
