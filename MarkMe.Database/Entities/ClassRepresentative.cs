@@ -11,5 +11,6 @@ namespace MarkMe.Database.Entities
         [ForeignKey("User")]
         public int NominatedBy { get; set; }
 
+        public ICollection<Activity> Activities { get; set; }
     }
 }
