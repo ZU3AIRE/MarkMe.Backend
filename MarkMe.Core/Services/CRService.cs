@@ -11,5 +11,18 @@ namespace MarkMe.Core.Services
             var crs = await _repo.GetAllAsync();
             return crs;
         }
+
+        public async Task<CRDTO> AddAsync(CreateCRDTO obj)
+        {
+            var cr = await _repo.AddAsync(obj);
+            return cr;
+
+        }
+
+        public async Task<CRDTO?> GetAsync(int studentId)
+        {
+            var cr = await _repo.GetAsync(studentId);
+            return cr;
+        }
     }
 }

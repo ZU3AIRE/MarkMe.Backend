@@ -14,5 +14,24 @@ namespace MarkMe.WebAPI.Controllers
             var crs = await _crService.GetAllAsync();
             return Ok(crs);
         }
+
+        [HttpGet("{studentId}")]
+        public async Task<ActionResult<CRDTO>> GetCRById(int studentId)
+        {
+            var cr = await _crService.GetAsync(studentId);
+            if (cr == null)
+            {
+                return NotFound();
+            }
+            return Ok(cr);
+        }
+
+
+        [HttpPost] 
+        public async Task<ActionResult> NominateCR(CreateCRDTO cr)
+        {
+            var createdCR = await _crService.AddAsync(cr);
+            return CreatedAtAction(nameof(GetCRById), new { studentId = cr.StudentId }, createdCR);
+        }
     }
 }

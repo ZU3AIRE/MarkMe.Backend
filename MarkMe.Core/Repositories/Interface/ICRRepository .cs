@@ -4,9 +4,9 @@ namespace MarkMe.Core.Repositories.Interface
 {
     public interface ICRRepository
     {
-        //Task<CourseDTO?> GetAsync(int id);
+        Task<CRDTO?> GetAsync(int studentId);
         Task<IEnumerable<CRDTO>> GetAllAsync();
-        //Task<CourseDTO> AddAsync(CourseDTO obj);
+        Task<CRDTO> AddAsync(CreateCRDTO cr);
         //Task<CourseDTO> UpdateAsync(int id, CourseDTO updatedObj);
         //Task<bool> DeleteAsync(int id);
     }
