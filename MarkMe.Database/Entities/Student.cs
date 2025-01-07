@@ -7,13 +7,13 @@ namespace MarkMe.Database.Entities
         [Key]
         public int StudentId { get; set; }
 
-        [StringLength(4)]
+        [StringLength(4, ErrorMessage = "College roll no cannot be longer than 4 characters.")]
         public string CollegeRollNo { get; set; } = string.Empty;
 
-        [StringLength(6)]
+        [StringLength(6, ErrorMessage = "University roll no cannot be longer than 6 characters.")]
         public string UniversityRollNo { get; set; } = string.Empty;
 
-        [StringLength(12)]
+        [StringLength(12, ErrorMessage = "Registration no cannot be longer than 12 characters.")]
         public string RegistrationNo { get; set; } = string.Empty;
 
         [StringLength(50)]
@@ -22,7 +22,7 @@ namespace MarkMe.Database.Entities
         [StringLength(50)]
         public string LastName { get; set; } = string.Empty;
 
-        [StringLength(9)]
+        [StringLength(9, ErrorMessage = "Session cannot be longer than 9 characters.")]
         public string Session { get; set; } = string.Empty;
 
         [StringLength(9)]

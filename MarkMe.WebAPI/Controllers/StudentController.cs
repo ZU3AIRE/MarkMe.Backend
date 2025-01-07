@@ -1,4 +1,5 @@
-﻿using MarkMe.Core.Services.Interface;
+﻿using MarkMe.Core.DTOs;
+using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +10,16 @@ namespace MarkMe.WebAPI.Controllers
     public class StudentController(IStudentService _studentService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
+        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetAllStudents()
         {
-            var students = await _studentService.GetAll();
+            var students = await _studentService.GetAllAsync();
             return Ok(students);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudentById(int id)
+        public async Task<ActionResult<StudentDTO>> GetStudentById(int id)
         {
-            var student = await _studentService.Get(id);
+            var student = await _studentService.GetAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -27,28 +28,26 @@ namespace MarkMe.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Student>> CreateStudent([FromBody] Student student)
+        public async Task<ActionResult<StudentDTO>> CreateStudent([FromBody] CreateStudentDTO student)
         {
-            var createdStudent = await _studentService.Add(student);
-            return CreatedAtAction(nameof(GetStudentById), new { id = student.StudentId }, createdStudent);
+            var createdStudent = await _studentService.AddAsync(student);
+            return CreatedAtAction(nameof(GetStudentById), new { id = createdStudent.StudentId }, createdStudent);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudent(int id, [FromBody] Student student)
+        public async Task<IActionResult> UpdateStudent(int id, [FromBody] StudentDTO student)
         {
             if (id != student.StudentId)
             {
                 return BadRequest();
             }
-            await _studentService.Update(id, student);
-            return NoContent();
+            return Ok(await _studentService.UpdateAsync(student));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
-            await _studentService.Delete(id);
-            return NoContent();
+            return Ok(await _studentService.DeleteAsync(id));
         }
     }
 }
