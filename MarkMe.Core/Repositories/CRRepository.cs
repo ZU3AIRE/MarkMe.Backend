@@ -14,7 +14,7 @@ namespace MarkMe.Core.Repositories
                 VALUES(@StudentId, @CourseId, 0, 1);
              """;
 
-            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj);
+            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj.CourseIds.Select(courseId => new { StudentId = obj.StudentId, CourseId = courseId }));
 
             // Query Added
             var crDTO = await GetAsync(obj.StudentId);
