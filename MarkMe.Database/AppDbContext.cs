@@ -30,10 +30,10 @@ namespace MarkMe.Database
                     FirstName = "Zubair",
                     LastName="Jamil",
                     CollegeRollNo="537",
-                    RegistrationNo="2021-gsr-439",
+                    RegistrationNo="2021gsr439",
                     UniversityRollNo="070941",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -41,10 +41,10 @@ namespace MarkMe.Database
                     FirstName = "Umair",
                     LastName="Jamil",
                     CollegeRollNo="539",
-                    RegistrationNo="2021-gsr-442",
+                    RegistrationNo="2021gsr442",
                     UniversityRollNo="070943",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
             });

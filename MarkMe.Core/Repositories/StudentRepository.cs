@@ -37,20 +37,26 @@ namespace MarkMe.Core.Repositories
             return await _database.QuerySingleAsync<StudentDTO>(sql, new { Id = id });
         }
 
-        public Task<IEnumerable<StudentDTO>> GetAllStudentsAsync()
+        public async Task<IEnumerable<StudentDTO>> GetAllStudentsAsync()
         {
             var sql = "SELECT * FROM Students WHERE IsDeleted = 0";
-            return _database.QueryAsync<StudentDTO>(sql);
+            return await _database.QueryAsync<StudentDTO>(sql);
         }
 
-        public Task<StudentDTO?> UpdateStudentAsync(int id, StudentDTO updatedObj)
+        public async Task<StudentDTO?> UpdateStudentAsync(int id, StudentDTO updatedObj)
         {
-            var sql = "UPDATE Students " +
-                      "SET " +
-                        "CollegeRollNo = @CollegeRollNo, UniversityRollNo = @UniversityRollNo, RegistrationNo = @RegistrationNo, " +
-                        "FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section " +
-                      " WHERE StudentId = @StudentId";
-            return _database.QuerySingleAsync<StudentDTO>(sql, updatedObj);
+            var sql = """
+                UPDATE Students
+                SET
+                    CollegeRollNo = @CollegeRollNo, UniversityRollNo = @UniversityRollNo, RegistrationNo = @RegistrationNo,
+                    FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section
+                    WHERE StudentId = @StudentId;
+                
+                SELECT * FROM Students WHERE StudentId = @StudentId
+                """;
+
+            var updated = await _database.QuerySingleAsync<StudentDTO>(sql, updatedObj);
+            return updated;
         }
     }
 }
