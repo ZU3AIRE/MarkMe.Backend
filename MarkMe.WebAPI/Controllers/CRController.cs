@@ -28,10 +28,17 @@ namespace MarkMe.WebAPI.Controllers
 
 
         [HttpPost] 
-        public async Task<ActionResult> NominateCR(CreateCRDTO cr)
+        public async Task<ActionResult> NominateCR(AddUpdateCRDTO cr)
         {
             var createdCR = await _crService.AddAsync(cr);
             return CreatedAtAction(nameof(GetCRById), new { studentId = cr.StudentId }, createdCR);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateCR(AddUpdateCRDTO cr)
+        {
+            await _crService.UpdateAsync(cr);
+            return NoContent();
         }
     }
 }

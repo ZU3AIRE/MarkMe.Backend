@@ -1,6 +1,6 @@
 ﻿namespace MarkMe.Core.DTOs
 {
-    public class CreateCRDTO
+    public class AddUpdateCRDTO
     {
         public int StudentId { get; set; }
         public List<int> CourseIds { get; set; }

@@ -4,7 +4,8 @@ namespace MarkMe.Core.Services.Interface
 {
     public interface ICRService
     {
-        Task<CRDTO> AddAsync(CreateCRDTO cr);
+        Task<CRDTO> AddAsync(AddUpdateCRDTO cr);
+        Task UpdateAsync(AddUpdateCRDTO cr);
         Task<CRDTO?> GetAsync(int studentId);
         Task<IEnumerable<CRDTO>> GetAllAsync();
         //Task<CourseDTO> UpdateAsync(CourseDTO course);
