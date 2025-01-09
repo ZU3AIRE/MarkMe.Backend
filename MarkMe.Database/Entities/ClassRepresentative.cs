@@ -12,5 +12,6 @@ namespace MarkMe.Database.Entities
         public int NominatedBy { get; set; }
 
         public ICollection<Activity> Activities { get; set; }
+        public bool IsDisabled { get; set; } = false;
     }
 }

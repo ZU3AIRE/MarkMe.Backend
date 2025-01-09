@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MarkMe.Core.DTOs
+﻿namespace MarkMe.Core.DTOs
 {
     public class CRDTO
     {
@@ -15,5 +9,6 @@ namespace MarkMe.Core.DTOs
         public List<SelectItem> Courses { get; set; }
         public List<ActivityDTO> Activities { get; set; }
         public string Avatar { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }

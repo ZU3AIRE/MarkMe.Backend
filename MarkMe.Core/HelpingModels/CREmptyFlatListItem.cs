@@ -13,5 +13,6 @@ namespace MarkMe.Core.HelpingModels
         public string LastName { get; set; }
         public int CourseId { get; set; }
         public string CourseName { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }

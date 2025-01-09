@@ -27,7 +27,7 @@ namespace MarkMe.WebAPI.Controllers
         }
 
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<ActionResult> NominateCR(AddUpdateCRDTO cr)
         {
             var createdCR = await _crService.AddAsync(cr);
@@ -40,5 +40,12 @@ namespace MarkMe.WebAPI.Controllers
             await _crService.UpdateAsync(cr);
             return NoContent();
         }
-    }
+
+        [HttpGet("{studentId}/{isDisabled}")]
+        public async Task<ActionResult> ToggleActive(int studentId, bool isDisabled)
+        {
+            var all = await _crService.ToggleActive(studentId, isDisabled);
+            return Ok(all);
+        }
+    }   
 }

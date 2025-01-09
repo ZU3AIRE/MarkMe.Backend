@@ -9,5 +9,6 @@
         public string CourseName { get; set; }
         public string ActivityDescription { get; set; }
         public DateTime? ActivityDate { get; set; } = null;
+        public bool IsDisabled { get; set; }
     }
 }

@@ -29,5 +29,10 @@ namespace MarkMe.Core.Services
             var cr = await _repo.GetAsync(studentId);
             return cr;
         }
+
+        public async Task<IEnumerable<CRDTO>> ToggleActive(int studentId, bool isDisabled)
+        {
+            return await _repo.ToggleActive(studentId, isDisabled);
+        }
     }
 }

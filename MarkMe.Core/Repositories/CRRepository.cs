@@ -42,7 +42,8 @@ namespace MarkMe.Core.Repositories
 						Courses.CourseId, 
 						Courses.Title AS CourseName,
 						Activities.Description AS ActivityDescription,
-						Activities.Date AS ActivityDate
+						Activities.Date AS ActivityDate,
+						IsDisabled
 					FROM ClassRepresentatives
 					LEFT JOIN Students ON Students.StudentId = ClassRepresentatives.StudentId
 					LEFT JOIN Courses ON Courses.CourseId = ClassRepresentatives.CourseId
@@ -50,7 +51,7 @@ namespace MarkMe.Core.Repositories
 					""";
             var flatList = await _database.QueryAsync<CRFlatListItem>(sql);
             var crDTOs = flatList
-                .GroupBy(x => new { x.FirstName, x.LastName, x.StudentId })
+                .GroupBy(x => new { x.FirstName, x.LastName, x.StudentId, x.IsDisabled })
                 .Select(g =>
                 {
                     return new CRDTO
@@ -58,6 +59,7 @@ namespace MarkMe.Core.Repositories
                         StudentId = g.Key.StudentId,
                         FirstName = g.Key.FirstName,
                         LastName = g.Key.LastName,
+                        IsDisabled = g.Key.IsDisabled,
                         PhoneNumber = "+92-326-4696321", // g.Key.PhoneNumber,
                         Avatar = "https://api.dicebear.com/9.x/notionists/svg?seed=" + g.Key.FirstName + g.Key.LastName + "&scale=200&backgroundColor=039be5,b6e3f4,d1d4f9", // g.Key.Avatar,
                         Courses = g.Select(x => new SelectItem(x.CourseId, x.CourseName)).Distinct().ToList(),
@@ -66,6 +68,21 @@ namespace MarkMe.Core.Repositories
                 })
                 .ToList();
             return crDTOs;
+        }
+        
+        public async Task<IEnumerable<CRDTO>> ToggleActive(int studentId, bool isDisabled)
+        {
+            const string sql = """ 
+					UPDATE ClassRepresentatives
+					SET
+						IsDisabled = @isDisabled
+					WHERE  
+					    ClassRepresentatives.StudentId = @studentId
+					""";
+
+            var affectedRows = await _database.ExecuteAsync(sql, new { studentId, isDisabled });
+            var all = await GetAllAsync();
+            return all;
         }
 
         public async Task<CRDTO?> GetAsync(int studentId)
@@ -84,12 +101,13 @@ namespace MarkMe.Core.Repositories
 					""";
             var flatList = await _database.QueryAsync<CREmptyFlatListItem>(sql, new { StudentId = studentId });
             var crDTO = flatList
-                .GroupBy(x => new { x.FirstName, x.LastName, x.StudentId })
+                .GroupBy(x => new { x.FirstName, x.LastName, x.StudentId, x.IsDisabled })
                 .Select(g => new CRDTO
                 {
                     StudentId = g.Key.StudentId,
                     FirstName = g.Key.FirstName,
                     LastName = g.Key.LastName,
+                    IsDisabled = g.Key.IsDisabled,
                     PhoneNumber = "+92-326-4696321", // g.Key.PhoneNumber,
                     Avatar = "https://api.dicebear.com/9.x/notionists/svg?seed=" + g.Key.FirstName + g.Key.LastName + "&scale=200&backgroundColor=039be5,b6e3f4,d1d4f9", // g.Key.Avatar,
                     Courses = g.Select(x => new SelectItem(x.CourseId, x.CourseName)).Distinct().ToList(),
