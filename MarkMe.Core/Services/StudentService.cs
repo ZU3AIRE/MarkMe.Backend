@@ -39,7 +39,12 @@ namespace MarkMe.Core.Services
             return await _studRepo.GetAllStudentsAsync();
         }
 
-        public async Task<StudentDTO> UpdateAsync(StudentDTO updatedObj)
+        public Task<IEnumerable<StudentDTO>> GetCRNomineesAsync()
+        {
+            return _studRepo.GetCRNomineesAsync();
+        }
+
+        public Task<StudentDTO> UpdateAsync(StudentDTO updatedObj)
         {
             var updated = await _studRepo.UpdateStudentAsync(updatedObj.StudentId, updatedObj);
             return updated;
