@@ -41,7 +41,8 @@ namespace MarkMe.WebAPI.Controllers
             {
                 return BadRequest();
             }
-            return Ok(await _studentService.UpdateAsync(student));
+            var updated = await _studentService.UpdateAsync(student);
+            return Ok(updated);
         }
 
         [HttpDelete("{id}")]
