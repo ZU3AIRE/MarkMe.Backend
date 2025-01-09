@@ -57,7 +57,7 @@ namespace MarkMe.Core.Repositories
             return _database.QueryAsync<StudentDTO>(sql);
         }
 
-        public Task<StudentDTO?> UpdateStudentAsync(int id, StudentDTO updatedObj)
+        public async Task<StudentDTO?> UpdateStudentAsync(int id, StudentDTO updatedObj)
         {
             var sql = """
                 UPDATE Students
