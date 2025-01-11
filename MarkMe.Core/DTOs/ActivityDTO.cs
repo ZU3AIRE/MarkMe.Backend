@@ -9,6 +9,6 @@ namespace MarkMe.Core.DTOs
     public class ActivityDTO
     {
         public string Description { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

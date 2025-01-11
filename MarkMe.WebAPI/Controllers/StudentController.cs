@@ -50,5 +50,12 @@ namespace MarkMe.WebAPI.Controllers
         {
             return Ok(await _studentService.DeleteAsync(id));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetCRNomineesAsync()
+        {
+            var students = await _studentService.GetCRNomineesAsync();
+            return Ok(students);
+        }
     }
 }

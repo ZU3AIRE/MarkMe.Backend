@@ -43,6 +43,20 @@ namespace MarkMe.Core.Repositories
             return await _database.QueryAsync<StudentDTO>(sql);
         }
 
+        public Task<IEnumerable<StudentDTO>> GetCRNomineesAsync()
+        {
+            var sql = """
+                    SELECT * 
+                    FROM Students 
+                    WHERE NOT EXISTS (
+                        SELECT 1 
+                        FROM ClassRepresentatives 
+                        WHERE ClassRepresentatives.StudentId = Students.StudentId
+                    )
+                    """;
+            return _database.QueryAsync<StudentDTO>(sql);
+        }
+
         public async Task<StudentDTO?> UpdateStudentAsync(int id, StudentDTO updatedObj)
         {
             var sql = """
