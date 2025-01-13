@@ -1,6 +1,8 @@
 using MarkMe.Core;
 using MarkMe.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,21 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod());
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.Authority = "https://leading-yak-1.clerk.accounts.dev"; // Replace with your Clerk Issuer
+    //options.Audience = "app_2pYpP3kQKnIA0qWOSW4OkQ883O2"; // Replace with your Clerk Frontend API key (Client ID)
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidIssuer = "https://leading-yak-1.clerk.accounts.dev", // Replace with your Clerk Issuer
+        //ValidAudience = "app_2pYpP3kQKnIA0qWOSW4OkQ883O2", // Replace with your Clerk Frontend API key
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Use CORS policy
