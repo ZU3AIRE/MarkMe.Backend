@@ -1,10 +1,12 @@
 ﻿using MarkMe.Core.DTOs;
 using MarkMe.Core.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [Authorize(Roles = "tutor")]
     [ApiController]
     public class CRController(ICRService _crService) : ControllerBase
     {
