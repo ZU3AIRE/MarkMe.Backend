@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109120041_addAttendenceData")]
+    partial class addAttendenceData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,9 +245,6 @@ namespace MarkMe.Database.Migrations
                     b.Property<int>("IsDeleted")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
                     b.Property<int>("NominatedBy")
                         .HasColumnType("int");
 
@@ -258,7 +258,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 1,
                             CourseId = 1,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -266,7 +265,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 2,
                             CourseId = 2,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -274,7 +272,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 3,
                             CourseId = 3,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -282,7 +279,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 4,
                             CourseId = 4,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -290,7 +286,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 5,
                             CourseId = 5,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -298,7 +293,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 6,
                             CourseId = 1,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         },
                         new
@@ -306,7 +300,6 @@ namespace MarkMe.Database.Migrations
                             StudentId = 7,
                             CourseId = 2,
                             IsDeleted = 0,
-                            IsDisabled = false,
                             NominatedBy = 1
                         });
                 });
@@ -509,9 +502,9 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 1,
                             CollegeRollNo = "537",
-                            FirstName = "Mousa",
+                            FirstName = "Zubair",
                             IsDeleted = false,
-                            LastName = "Naeem",
+                            LastName = "Jamil",
                             RegistrationNo = "2021gsr439",
                             Section = "G1",
                             Session = "20212025",
@@ -521,9 +514,9 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 2,
                             CollegeRollNo = "539",
-                            FirstName = "Aftab",
+                            FirstName = "Umair",
                             IsDeleted = false,
-                            LastName = "Sattar",
+                            LastName = "Jamil",
                             RegistrationNo = "2021gsr442",
                             Section = "G1",
                             Session = "20212025",

@@ -15,9 +15,11 @@ namespace MarkMe.Core
         {
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ICRRepository, CRRepository>();
-
-            services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+
+            services.AddScoped<IAttendanceService, AttendanceService>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICRService, CRService>();
             return services;
