@@ -34,8 +34,8 @@ namespace MarkMe.Database
             {
                 new Student() {
                     StudentId = 1,
-                    FirstName = "Zubair",
-                    LastName="Jamil",
+                    FirstName = "Mousa",
+                    LastName="Naeem",
                     CollegeRollNo="537",
                     RegistrationNo="2021gsr439",
                     UniversityRollNo="070941",
@@ -45,8 +45,8 @@ namespace MarkMe.Database
                 },
                 new Student() {
                     StudentId = 2,
-                    FirstName = "Umair",
-                    LastName="Jamil",
+                    FirstName = "Aftab",
+                    LastName="Sattar",
                     CollegeRollNo="539",
                     RegistrationNo="2021gsr442",
                     UniversityRollNo="070943",
@@ -59,10 +59,10 @@ namespace MarkMe.Database
                     FirstName = "Ali",
                     LastName="Senior",
                     CollegeRollNo="540",
-                    RegistrationNo="2021-gsr-443",
+                    RegistrationNo="2021gsr443",
                     UniversityRollNo="070944",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -70,10 +70,10 @@ namespace MarkMe.Database
                     FirstName = "Ahmed",
                     LastName="Ali",
                     CollegeRollNo="541",
-                    RegistrationNo="2021-gsr-444",
+                    RegistrationNo="2021gsr444",
                     UniversityRollNo="070945",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -81,10 +81,10 @@ namespace MarkMe.Database
                     FirstName = "Asad",
                     LastName="Mojenzo",
                     CollegeRollNo="542",
-                    RegistrationNo="2021-gsr-445",
+                    RegistrationNo="2021gsr445",
                     UniversityRollNo="070946",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -92,10 +92,10 @@ namespace MarkMe.Database
                     FirstName = "Ahsan",
                     LastName="Dildar",
                     CollegeRollNo="543",
-                    RegistrationNo="2021-gsr-446",
+                    RegistrationNo="2021gsr446",
                     UniversityRollNo="070947",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -103,10 +103,10 @@ namespace MarkMe.Database
                     FirstName = "Minal",
                     LastName="Asgher",
                     CollegeRollNo="544",
-                    RegistrationNo="2021-gsr-447",
+                    RegistrationNo="2021gsr447",
                     UniversityRollNo="070948",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -114,10 +114,10 @@ namespace MarkMe.Database
                     FirstName = "Wajeeha",
                     LastName="Maqsood",
                     CollegeRollNo="545",
-                    RegistrationNo="2021-gsr-448",
+                    RegistrationNo="2021gsr448",
                     UniversityRollNo="070949",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -125,10 +125,10 @@ namespace MarkMe.Database
                     FirstName = "Mahnoor",
                     LastName="Aqdas",
                     CollegeRollNo="546",
-                    RegistrationNo="2021-gsr-449",
+                    RegistrationNo="2021gsr449",
                     UniversityRollNo="070950",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -136,10 +136,10 @@ namespace MarkMe.Database
                     FirstName = "Nasir",
                     LastName="Aslam",
                     CollegeRollNo="547",
-                    RegistrationNo="2021-gsr-450",
+                    RegistrationNo="2021gsr450",
                     UniversityRollNo="070951",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -147,10 +147,10 @@ namespace MarkMe.Database
                     FirstName = "Mehrooz",
                     LastName="Atif",
                     CollegeRollNo="548",
-                    RegistrationNo="2021-gsr-451",
+                    RegistrationNo="2021gsr451",
                     UniversityRollNo="070952",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -158,10 +158,10 @@ namespace MarkMe.Database
                     FirstName = "Akther",
                     LastName="Ali",
                     CollegeRollNo="549",
-                    RegistrationNo="2021-gsr-452",
+                    RegistrationNo="2021gsr452",
                     UniversityRollNo="070953",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -169,10 +169,10 @@ namespace MarkMe.Database
                     FirstName = "Adeel",
                     LastName="Abbas",
                     CollegeRollNo="550",
-                    RegistrationNo="2021-gsr-453",
+                    RegistrationNo="2021gsr453",
                     UniversityRollNo="070954",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -180,10 +180,10 @@ namespace MarkMe.Database
                     FirstName = "Rohan",
                     LastName="Shahmeer",
                     CollegeRollNo="551",
-                    RegistrationNo="2021-gsr-454",
+                    RegistrationNo="2021gsr454",
                     UniversityRollNo="070955",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
                 new Student() {
@@ -191,10 +191,10 @@ namespace MarkMe.Database
                     FirstName = "Amber",
                     LastName="Shamraiz",
                     CollegeRollNo="552",
-                    RegistrationNo="2021-gsr-455",
+                    RegistrationNo="2021gsr455",
                     UniversityRollNo="070956",
                     Section="G1",
-                    Session="2021-2025",
+                    Session="20212025",
                     IsDeleted = false
                 },
             });
@@ -438,6 +438,67 @@ namespace MarkMe.Database
                     Date = new DateTime(2024, 1, 5, 12,3,11),
                 }
             });
+
+            // Attendence
+            modelBuilder.Entity<Attendance>().HasData(new[]
+            {
+                new Attendance
+                {
+                    AttendanceId = 1,
+                    StudentId = 1,
+                    CourseId = 1,
+                    DateMarked = new DateTime(2024, 1, 1, 12,3,11),
+                    MarkedBy = 1
+                },
+                new Attendance
+                {
+                    AttendanceId = 2,
+                    StudentId = 2,
+                    CourseId = 1,
+                    DateMarked = new DateTime(2024, 1, 2, 12,3,11),
+                    MarkedBy = 1
+                },
+                new Attendance
+                {
+                    AttendanceId = 3,
+                    StudentId = 3,
+                    CourseId = 1,
+                    DateMarked = new DateTime(2024, 1, 3, 12,3,11),
+                    MarkedBy = 2
+                },
+                new Attendance
+                {
+                    AttendanceId = 4,
+                    StudentId = 4,
+                    CourseId = 2,
+                    DateMarked = new DateTime(2024, 1, 4, 12,3,11),
+                    MarkedBy = 2
+                },
+                new Attendance
+                {
+                    AttendanceId = 5,
+                    StudentId = 5,
+                    CourseId = 1,
+                    DateMarked = new DateTime(2024, 1, 5, 12,3,11),
+                    MarkedBy = 1
+                },
+                new Attendance
+                {
+                    AttendanceId = 6,
+                    StudentId = 4,
+                    CourseId = 1,
+                    DateMarked = new DateTime(2024, 1, 4, 12,3,11),
+                    MarkedBy = 2
+                },
+                new Attendance
+                {
+                    AttendanceId = 7,
+                    StudentId = 5,
+                    CourseId = 2,
+                    DateMarked = new DateTime(2024, 1, 5, 12,3,11),
+                    MarkedBy = 1
+                },
+                });
         }
     }
 }
