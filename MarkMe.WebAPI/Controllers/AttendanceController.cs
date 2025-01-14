@@ -1,11 +1,13 @@
 ﻿using MarkMe.Core.DTOs;
 using MarkMe.Core.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "admin,tutor")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
