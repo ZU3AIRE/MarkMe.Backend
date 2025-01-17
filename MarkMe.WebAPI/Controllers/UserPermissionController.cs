@@ -17,22 +17,22 @@ namespace MarkMe.WebAPI.Controllers
             var allmenus = await _userPermissionService.GetAllAsync();
             var menus = new List<Menu>();
 
-            if (User.IsInRole(Role.Admin.ToString()))
+            if (User.IsInRole(Role.Admin.ToString().ToLower()))
             {
                 menus.AddRange(allmenus.Where(x => x.Role == Role.Admin).AsEnumerable());
             }
 
-            if (User.IsInRole(Role.Tutor.ToString()))
+            if (User.IsInRole(Role.Tutor.ToString().ToLower()))
             {
                 menus.AddRange(allmenus.Where(x => x.Role == Role.Tutor).AsEnumerable());
             }
 
-            if (User.IsInRole(Role.CR.ToString()))
+            if (User.IsInRole(Role.CR.ToString().ToLower()))
             {
                 menus.AddRange(allmenus.Where(x => x.Role == Role.CR).AsEnumerable());
             }
 
-            if (User.IsInRole(Role.Member.ToString()))
+            if (User.IsInRole(Role.Member.ToString().ToLower()))
             {
                 menus.AddRange(allmenus.Where(x => x.Role == Role.Member).AsEnumerable());
             }
