@@ -508,13 +508,13 @@ namespace MarkMe.Database
                 new Menu { MenuId = 2, Label = "Export/Share", Url = "export", Role = Role.Admin },
                 new Menu { MenuId = 3, Label = "Courses", Url = "courses", Role = Role.Admin },
                 new Menu { MenuId = 4, Label = "Students", Url = "students", Role = Role.Admin },
-                new Menu { MenuId = 5, Label = "Class Representative", Url = "class-representative", Role = Role.Admin },
+                new Menu { MenuId = 5, Label = "Class Representative", Url = "class-representatives", Role = Role.Admin },
 
                 new Menu { MenuId = 6, Label = "Mark Attendance", Url = "attendance", Role = Role.Tutor },
                 new Menu { MenuId = 7, Label = "Export/Share", Url = "export", Role = Role.Tutor },
                 new Menu { MenuId = 8, Label = "Courses", Url = "courses", Role = Role.Tutor },
                 new Menu { MenuId = 9, Label = "Students", Url = "students", Role = Role.Tutor },
-                new Menu { MenuId = 10, Label = "Class Representative", Url = "class-representative", Role = Role.Tutor },
+                new Menu { MenuId = 10, Label = "Class Representative", Url = "class-representatives", Role = Role.Tutor },
 
                 new Menu { MenuId = 11, Label = "Mark Attendance", Url = "attendance", Role = Role.CR },
                 new Menu { MenuId = 12, Label = "Export/Share", Url = "export", Role = Role.CR },
@@ -523,7 +523,7 @@ namespace MarkMe.Database
                 new Menu { MenuId = 14, Label = "Export/Share", Url = "export", Role = Role.Member },
                 new Menu { MenuId = 15, Label = "Courses", Url = "courses", Role = Role.Member },
                 new Menu { MenuId = 16, Label = "Students", Url = "students", Role = Role.Member },
-                new Menu { MenuId = 17, Label = "Class Representative", Url = "class-representative", Role = Role.Member },
+                new Menu { MenuId = 17, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
             }); 
         }
     }
