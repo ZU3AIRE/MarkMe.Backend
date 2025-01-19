@@ -18,6 +18,7 @@ namespace MarkMe.Database
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Activity> Activities { get; set; } = null!;
+        public DbSet<Menu> Menus { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -498,7 +499,32 @@ namespace MarkMe.Database
                     DateMarked = new DateTime(2024, 1, 5, 12,3,11),
                     MarkedBy = 1
                 },
-                });
+            });
+
+            // Insert Menus
+            modelBuilder.Entity<Menu>().HasData(new[]
+            {
+                new Menu { MenuId = 1, Label = "Mark Attendance", Url = "attendance", Role = Role.Admin },
+                new Menu { MenuId = 2, Label = "Export/Share", Url = "export", Role = Role.Admin },
+                new Menu { MenuId = 3, Label = "Courses", Url = "courses", Role = Role.Admin },
+                new Menu { MenuId = 4, Label = "Students", Url = "students", Role = Role.Admin },
+                new Menu { MenuId = 5, Label = "Class Representative", Url = "class-representatives", Role = Role.Admin },
+
+                new Menu { MenuId = 6, Label = "Mark Attendance", Url = "attendance", Role = Role.Tutor },
+                new Menu { MenuId = 7, Label = "Export/Share", Url = "export", Role = Role.Tutor },
+                new Menu { MenuId = 8, Label = "Courses", Url = "courses", Role = Role.Tutor },
+                new Menu { MenuId = 9, Label = "Students", Url = "students", Role = Role.Tutor },
+                new Menu { MenuId = 10, Label = "Class Representative", Url = "class-representatives", Role = Role.Tutor },
+
+                new Menu { MenuId = 11, Label = "Mark Attendance", Url = "attendance", Role = Role.CR },
+                new Menu { MenuId = 12, Label = "Export/Share", Url = "export", Role = Role.CR },
+
+                // For Readonly Purposes
+                new Menu { MenuId = 14, Label = "Export/Share", Url = "export", Role = Role.Member },
+                new Menu { MenuId = 15, Label = "Courses", Url = "courses", Role = Role.Member },
+                new Menu { MenuId = 16, Label = "Students", Url = "students", Role = Role.Member },
+                new Menu { MenuId = 17, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
+            }); 
         }
     }
 }

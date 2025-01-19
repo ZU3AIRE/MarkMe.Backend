@@ -17,11 +17,13 @@ namespace MarkMe.Core
             services.AddScoped<ICRRepository, CRRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
 
             services.AddScoped<IAttendanceService, AttendanceService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICRService, CRService>();
+            services.AddScoped<IUserPermissionService, UserPermissionService>();
             return services;
         }
 
