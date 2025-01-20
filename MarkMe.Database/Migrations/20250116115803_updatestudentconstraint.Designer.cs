@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250116115803_updatestudentconstraint")]
+    partial class Updatestudentconstraint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -454,144 +457,6 @@ namespace MarkMe.Database.Migrations
                     b.ToTable("Enrolments");
                 });
 
-            modelBuilder.Entity("MarkMe.Database.Entities.Menu", b =>
-                {
-                    b.Property<int>("MenuId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuId"));
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MenuId");
-
-                    b.ToTable("Menus");
-
-                    b.HasData(
-                        new
-                        {
-                            MenuId = 1,
-                            Label = "Mark Attendance",
-                            Role = 0,
-                            Url = "attendance"
-                        },
-                        new
-                        {
-                            MenuId = 2,
-                            Label = "Export/Share",
-                            Role = 0,
-                            Url = "export"
-                        },
-                        new
-                        {
-                            MenuId = 3,
-                            Label = "Courses",
-                            Role = 0,
-                            Url = "courses"
-                        },
-                        new
-                        {
-                            MenuId = 4,
-                            Label = "Students",
-                            Role = 0,
-                            Url = "students"
-                        },
-                        new
-                        {
-                            MenuId = 5,
-                            Label = "Class Representative",
-                            Role = 0,
-                            Url = "class-representatives"
-                        },
-                        new
-                        {
-                            MenuId = 6,
-                            Label = "Mark Attendance",
-                            Role = 1,
-                            Url = "attendance"
-                        },
-                        new
-                        {
-                            MenuId = 7,
-                            Label = "Export/Share",
-                            Role = 1,
-                            Url = "export"
-                        },
-                        new
-                        {
-                            MenuId = 8,
-                            Label = "Courses",
-                            Role = 1,
-                            Url = "courses"
-                        },
-                        new
-                        {
-                            MenuId = 9,
-                            Label = "Students",
-                            Role = 1,
-                            Url = "students"
-                        },
-                        new
-                        {
-                            MenuId = 10,
-                            Label = "Class Representative",
-                            Role = 1,
-                            Url = "class-representatives"
-                        },
-                        new
-                        {
-                            MenuId = 11,
-                            Label = "Mark Attendance",
-                            Role = 2,
-                            Url = "attendance"
-                        },
-                        new
-                        {
-                            MenuId = 12,
-                            Label = "Export/Share",
-                            Role = 2,
-                            Url = "export"
-                        },
-                        new
-                        {
-                            MenuId = 14,
-                            Label = "Export/Share",
-                            Role = 3,
-                            Url = "export"
-                        },
-                        new
-                        {
-                            MenuId = 15,
-                            Label = "Courses",
-                            Role = 3,
-                            Url = "courses"
-                        },
-                        new
-                        {
-                            MenuId = 16,
-                            Label = "Students",
-                            Role = 3,
-                            Url = "students"
-                        },
-                        new
-                        {
-                            MenuId = 17,
-                            Label = "Class Representative",
-                            Role = 3,
-                            Url = "class-representatives"
-                        });
-                });
-
             modelBuilder.Entity("MarkMe.Database.Entities.Student", b =>
                 {
                     b.Property<int>("StudentId")
@@ -641,9 +506,6 @@ namespace MarkMe.Database.Migrations
                     b.HasKey("StudentId");
 
                     b.HasIndex("CollegeRollNo")
-                        .IsUnique();
-
-                    b.HasIndex("RegistrationNo")
                         .IsUnique();
 
                     b.HasIndex("UniversityRollNo")

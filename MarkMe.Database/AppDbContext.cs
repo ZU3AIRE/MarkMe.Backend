@@ -31,6 +31,18 @@ namespace MarkMe.Database
 
             modelBuilder.Entity<ClassRepresentative>().HasKey(e => new { e.StudentId, e.CourseId });
 
+            modelBuilder.Entity<Student>()
+                .HasIndex(e => e.CollegeRollNo)
+                .IsUnique();
+
+            modelBuilder.Entity<Student>()
+                .HasIndex(e => e.UniversityRollNo)
+                .IsUnique();
+
+            modelBuilder.Entity<Student>()
+                .HasIndex(e => e.RegistrationNo)
+                .IsUnique();
+
             modelBuilder.Entity<Student>().HasData(new[]
             {
                 new Student() {
