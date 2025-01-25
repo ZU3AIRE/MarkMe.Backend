@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250123113121_UpdateUser")]
+    partial class UpdateUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -873,7 +876,7 @@ namespace MarkMe.Database.Migrations
                         new
                         {
                             UserId = 1,
-                            Email = "markmetutor@tohru.org",
+                            Email = "markmecr@tohru.org",
                             FirstName = "Zubair",
                             IsDeleted = false,
                             LastName = "Jamil",
@@ -882,7 +885,7 @@ namespace MarkMe.Database.Migrations
                         new
                         {
                             UserId = 2,
-                            Email = "markmeadmin@tohru.org",
+                            Email = "markmetutor@tohru.org",
                             FirstName = "Umair",
                             IsDeleted = false,
                             LastName = "Jamil",
@@ -891,7 +894,7 @@ namespace MarkMe.Database.Migrations
                         new
                         {
                             UserId = 3,
-                            Email = "markmecr@tohru.org",
+                            Email = "markmeadmin@tohru.org",
                             FirstName = "Mousa",
                             IsDeleted = false,
                             LastName = "Naeem",
