@@ -23,6 +23,14 @@ namespace MarkMe.Core.Repositories
             {
                 var sql = "UPDATE Students SET IsDeleted = 1 WHERE StudentId = @Id";
                 await _database.ExecuteAsync(sql, new { Id = id });
+
+                var sql1 = """
+                    IF EXISTS(SELECT 1 FROM ClassRepresentatives WHERE StudentId = @Id)
+                        BEGIN
+                    	    UPDATE ClassRepresentatives SET IsDeleted = 1 WHERE StudentId = @Id
+                        END
+                    """;
+                var rows = await _database.ExecuteAsync(sql1, new { Id = id });
                 return true;
             }
             catch (Exception)

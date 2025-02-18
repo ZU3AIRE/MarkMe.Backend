@@ -9,7 +9,7 @@ namespace MarkMe.Core.DTOs
     public class AddAttendanceDTO
     {
         public int CourseId { get; set; }
-        public List<int> StudentIds { get; set; }
+        public string StudentsRollNos { get; set; }
     }
 
     public class AttendanceDTO

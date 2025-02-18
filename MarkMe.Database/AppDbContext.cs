@@ -49,9 +49,9 @@ namespace MarkMe.Database
                     StudentId = 1,
                     FirstName = "Mousa",
                     LastName="Naeem",
-                    CollegeRollNo="537",
-                    RegistrationNo="2021gsr439",
-                    UniversityRollNo="070941",
+                    CollegeRollNo="501",
+                    RegistrationNo="2021gsr407",
+                    UniversityRollNo="070982",
                     Section="G1",
                     Session="20212025",
                     IsDeleted = false
@@ -219,16 +219,24 @@ namespace MarkMe.Database
                     UserId = 1,
                     FirstName = "Zubair",
                     LastName = "Jamil",
-                    Email = "xubairjamil@gmail.com",
-                    Password = "123456",
+                    Email = "markmetutor@tohru.org",
+                    Password = "MarkMe@12",
                     IsDeleted = false
                 },
                 new User() {
                     UserId = 2,
                     FirstName = "Umair",
                     LastName = "Jamil",
-                    Email = "umairjamil@gmail.com",
-                    Password = "123456",
+                    Email = "markmeadmin@tohru.org",
+                    Password = "MarkMe@12",
+                    IsDeleted = false
+                },
+                new User() {
+                    UserId = 3,
+                    FirstName = "Mousa",
+                    LastName = "Naeem",
+                    Email = "markmecr@tohru.org",
+                    Password = "MarkMe@12",
                     IsDeleted = false
                 }
             });
@@ -536,7 +544,7 @@ namespace MarkMe.Database
                 new Menu { MenuId = 15, Label = "Courses", Url = "courses", Role = Role.Member },
                 new Menu { MenuId = 16, Label = "Students", Url = "students", Role = Role.Member },
                 new Menu { MenuId = 17, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
-            }); 
+            });
         }
     }
 }
