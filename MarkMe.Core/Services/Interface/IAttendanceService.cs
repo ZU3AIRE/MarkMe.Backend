@@ -5,8 +5,11 @@ namespace MarkMe.Core.Services.Interface
     public interface IAttendanceService
     {
         Task<IEnumerable<AttendanceDataModel>> GetAllAsync();
+        Task<IEnumerable<CoursesDTO>> GetCRCoursesAsync();
+        Task<IEnumerable<CoursesDTO>> GetTutorCourses(string email);
         Task<IEnumerable<AttendanceDataModel?>> GetByCourseId(int courseId);
-        Task<IEnumerable<AttendanceDataModel>> AddAsync(AddAttendanceDTO obj);
+        Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj,string userEmail);
+        Task<IEnumerable<ValidStudents>> GetValidStudentsByRollNumbersAsync(List<string> rollNos);
         Task<AttendanceDataModel> UpdateAsync(int attendanceId, UpdateAttendanceDTO obj);
         Task<bool> DeleteAsync(int attendanceId);
         Task<bool> BulkDeleteAsync(BulkDeleteAttendanceDTO attendanceIds);
