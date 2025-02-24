@@ -324,6 +324,34 @@ namespace MarkMe.Database
                 },
                 new ClassRepresentative
                 {
+                    StudentId = 2,
+                    CourseId = 1,
+                    NominatedBy = 1,
+                    IsDeleted = 0
+                },
+                new ClassRepresentative
+                {
+                    StudentId = 2,
+                    CourseId = 3,
+                    NominatedBy = 1,
+                    IsDeleted = 0
+                },
+                new ClassRepresentative
+                {
+                    StudentId = 2,
+                    CourseId = 4,
+                    NominatedBy = 1,
+                    IsDeleted = 0
+                },
+                new ClassRepresentative
+                {
+                    StudentId = 2,
+                    CourseId = 5,
+                    NominatedBy = 1,
+                    IsDeleted = 0
+                },
+                new ClassRepresentative
+                {
                     StudentId = 3,
                     CourseId = 3,
                     NominatedBy = 1,

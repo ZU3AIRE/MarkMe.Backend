@@ -38,7 +38,7 @@ namespace MarkMe.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddAttendance(AddAttendanceDTO obj)
         {
-            if (obj == null || obj.CourseId <= 0 || obj.StudentsRollNos is " ")
+            if (obj == null || obj.CourseId <= 0 || !obj.StudentsRollNos.Any())
             {
                 return BadRequest(new { message = "Invalid input data." });
             }
@@ -46,7 +46,7 @@ namespace MarkMe.WebAPI.Controllers
             try
             {
                 var email = User.Claims.Select(claim => claim.Value).FirstOrDefault();
-                var rollNumbers = obj.StudentsRollNos.Trim().Split(",").ToList();
+                var rollNumbers = obj.StudentsRollNos.Split(",").Select(r => r.Trim()).ToList();
                 var validStudents = await _attendanceService.GetValidStudentsByRollNumbersAsync(rollNumbers);
                 var validRollNumbers = validStudents.Select(s => s.RollNo).ToList();
                 var invalidRollNumbers = rollNumbers.Except(validRollNumbers).ToList();
@@ -61,6 +61,21 @@ namespace MarkMe.WebAPI.Controllers
                 {
                     await _attendanceService.AddAsync(attend, email);
                 }
+                if(validRollNumbers.Any() && invalidRollNumbers.Any())
+                {
+                    return Ok(new
+                    {
+                        message = "Attendance marked successfully.",
+                        invalidRollNumbers
+                    });
+                }
+                else if(invalidRollNumbers.Any() && !validRollNumbers.Any())
+                {
+                    return Ok(new
+                    {
+                        invalidRollNumbers
+                    });
+                }    
 
                 return Ok(new
                 {

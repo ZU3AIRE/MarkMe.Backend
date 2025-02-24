@@ -14,8 +14,11 @@ namespace MarkMe.Core.Repositories
                 INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked)
                 VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), GETDATE())
 
-                INSERT INTO Activities (Description, Date, ClassRepresentativeStudentId, ClassRepresentativeCourseId)
-                Values (@description, GETDATE(), 2, @CourseId)
+                IF EXISTS(Select * from Users where Email =@Email AND UserId = 3)
+                BEGIN
+                    INSERT INTO Activities (Description, Date, ClassRepresentativeStudentId, ClassRepresentativeCourseId)
+                    Values (@description, GETDATE(), 2, @CourseId)
+                END
                 """;
             var parameters = obj.StudentIds.Select(studentId => new
             {
