@@ -71,7 +71,8 @@ namespace MarkMe.Core.Repositories
                     INNER JOIN Users u 
                     ON a.MarkedBy = u.UserId
                 	INNER JOIN Courses c
-                	ON a.CourseId = c.CourseId                 
+                	ON a.CourseId = c.CourseId
+                    ORDER BY a.DateMarked DESC
                 """;
             var attendance = await _database.QueryAsync<AttendanceDataModel>(sql);
             return attendance;
@@ -91,6 +92,7 @@ namespace MarkMe.Core.Repositories
                 	INNER JOIN Courses c
                 	ON a.CourseId = c.CourseId  
                 WHERE a.CourseId = @CourseId
+                ORDER BY a.DateMarked DESC
                 """;
             var attendance = await _database.QueryAsync<AttendanceDataModel>(sql, new { CourseId = courseId });
             return attendance;
@@ -118,7 +120,8 @@ namespace MarkMe.Core.Repositories
                     ON a.MarkedBy = u.UserId
                 	INNER JOIN Courses c
                 	ON a.CourseId = c.CourseId  
-                WHERE a.AttendanceId = @attendanceId 
+                WHERE a.AttendanceId = @attendanceId
+                ORDER BY a.DateMarked DESC
                 """;
             var attendance = await _database.QuerySingleAsync<AttendanceDataModel>(sql, new { attendanceId });
             return attendance;
