@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250123121713_UpdateUsers")]
+    partial class UpdateUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,38 +268,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 2,
                             CourseId = 2,
-                            IsDeleted = 0,
-                            IsDisabled = false,
-                            NominatedBy = 1
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 1,
-                            IsDeleted = 0,
-                            IsDisabled = false,
-                            NominatedBy = 1
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 3,
-                            IsDeleted = 0,
-                            IsDisabled = false,
-                            NominatedBy = 1
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 4,
-                            IsDeleted = 0,
-                            IsDisabled = false,
-                            NominatedBy = 1
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 5,
                             IsDeleted = 0,
                             IsDisabled = false,
                             NominatedBy = 1

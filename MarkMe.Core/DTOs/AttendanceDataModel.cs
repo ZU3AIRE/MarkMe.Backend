@@ -15,8 +15,8 @@ namespace MarkMe.Core.DTOs
         public string UniversityRollNo { get; set; }
         public string CollegeRollNo { get; set; }
         public DateTime DateMarked { get; set; }
-        public string Code { get; set; }
-        public string Title { get; set; }
+        public string CourseCode { get; set; }
+        public string CourseTitle { get; set; }
         public int Semester { get; set; }
         public string MarkedBy { get; set; }
         public string Status { get; set; } = "Present";
