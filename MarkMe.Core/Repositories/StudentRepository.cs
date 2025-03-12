@@ -71,7 +71,7 @@ namespace MarkMe.Core.Repositories
                 UPDATE Students
                 SET
                     CollegeRollNo = @CollegeRollNo, UniversityRollNo = @UniversityRollNo, RegistrationNo = @RegistrationNo,
-                    FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section
+                    FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section, Email = @Email
                     WHERE StudentId = @StudentId;
                 
                 SELECT * FROM Students WHERE StudentId = @StudentId

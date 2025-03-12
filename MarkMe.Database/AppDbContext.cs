@@ -54,6 +54,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070982",
                     Section="G1",
                     Session="20212025",
+                    Email = "mnaeem@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -65,6 +66,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070943",
                     Section="G1",
                     Session="20212025",
+                    Email = "asattar@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -76,6 +78,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070944",
                     Section="G1",
                     Session="20212025",
+                    Email = "asenior@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -87,6 +90,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070945",
                     Section="G1",
                     Session="20212025",
+                    Email = "aali@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -109,6 +113,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070947",
                     Section="G1",
                     Session="20212025",
+                    Email = "adildar@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -120,6 +125,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070948",
                     Section="G1",
                     Session="20212025",
+                    Email = "masgher@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -131,6 +137,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070949",
                     Section="G1",
                     Session="20212025",
+                    Email = "wmaqsood@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -142,6 +149,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070950",
                     Section="G1",
                     Session="20212025",
+                    Email = "maqdas@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -153,6 +161,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070951",
                     Section="G1",
                     Session="20212025",
+                    Email = "naslam@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -164,6 +173,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070952",
                     Section="G1",
                     Session="20212025",
+                    Email = "matif@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -175,6 +185,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070953",
                     Section="G1",
                     Session="20212025",
+                    Email = "aali@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -186,6 +197,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070954",
                     Section="G1",
                     Session="20212025",
+                    Email = "aabbas@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -197,6 +209,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070955",
                     Section="G1",
                     Session="20212025",
+                    Email = "rshahmeer@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
@@ -208,6 +221,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070956",
                     Section="G1",
                     Session="20212025",
+                    Email = "ashamraiz@gmail.com",
                     IsDeleted = false
                 },
             });
@@ -305,87 +319,87 @@ namespace MarkMe.Database
                 }
             });
 
-            // Class Representatives
-            modelBuilder.Entity<ClassRepresentative>().HasData(new[]
-            {
-                new ClassRepresentative
-                {
-                    StudentId = 1,
-                    CourseId = 1,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 2,
-                    CourseId = 2,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 2,
-                    CourseId = 1,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 2,
-                    CourseId = 3,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 2,
-                    CourseId = 4,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 2,
-                    CourseId = 5,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 3,
-                    CourseId = 3,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 4,
-                    CourseId = 4,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 5,
-                    CourseId = 5,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 6,
-                    CourseId = 1,
-                    NominatedBy = 1,
-                    IsDeleted = 0
-                },
-                new ClassRepresentative
-                {
-                    StudentId = 7,
-                    CourseId = 2,
-                    NominatedBy = 1,
-                    IsDeleted = 0,
-                }
-            });
+            //// Class Representatives
+            //modelBuilder.Entity<ClassRepresentative>().HasData(new[]
+            //{
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 1,
+            //        CourseId = 1,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 2,
+            //        CourseId = 2,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 2,
+            //        CourseId = 1,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 2,
+            //        CourseId = 3,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 2,
+            //        CourseId = 4,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 2,
+            //        CourseId = 5,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 3,
+            //        CourseId = 3,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 4,
+            //        CourseId = 4,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 5,
+            //        CourseId = 5,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 6,
+            //        CourseId = 1,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0
+            //    },
+            //    new ClassRepresentative
+            //    {
+            //        StudentId = 7,
+            //        CourseId = 2,
+            //        NominatedBy = 1,
+            //        IsDeleted = 0,
+            //    }
+            //});
 
             // Activities
             modelBuilder.Entity<Activity>().HasData(new[]
