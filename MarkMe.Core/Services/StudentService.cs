@@ -18,7 +18,8 @@ namespace MarkMe.Core.Services
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
                 Session = obj.Session,
-                Section = obj.Section
+                Section = obj.Section,
+                Email = obj.Email
             };
             var stcd = await _studRepo.AddStudentAsync(student);
             return stcd;

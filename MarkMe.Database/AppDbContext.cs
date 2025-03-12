@@ -102,6 +102,7 @@ namespace MarkMe.Database
                     UniversityRollNo="070946",
                     Section="G1",
                     Session="20212025",
+                    Email = "asad@gmail.com",
                     IsDeleted = false
                 },
                 new Student() {
