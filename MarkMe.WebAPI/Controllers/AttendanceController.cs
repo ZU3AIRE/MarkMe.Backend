@@ -1,5 +1,6 @@
 ﻿using MarkMe.Core.DTOs;
 using MarkMe.Core.Services.Interface;
+using MarkMe.Database.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,6 +56,7 @@ namespace MarkMe.WebAPI.Controllers
                 {
                     CourseId = obj.CourseId,
                     StudentIds = validStudents.Select(s => s.StudentId).ToList(),
+                    AttendanceStatus = (AttendanceStatus)obj.Status
                 };
 
                 if (validStudents.Any())
