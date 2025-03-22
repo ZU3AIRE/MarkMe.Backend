@@ -9,8 +9,8 @@ namespace MarkMe.Core.Repositories
 
         public async Task<StudentDTO> AddStudentAsync(StudentDTO obj)
         {
-            var sql = "INSERT INTO Students (CollegeRollNo, UniversityRollNo, RegistrationNo, FirstName, LastName, Session, Section, IsDeleted) " +
-                "VALUES (@CollegeRollNo, @UniversityRollNo, @RegistrationNo, @FirstName, @LastName, @Session, @Section, 0); " +
+            var sql = "INSERT INTO Students (CollegeRollNo, UniversityRollNo, RegistrationNo, FirstName, LastName, Session, Section, IsDeleted, Email) " +
+                "VALUES (@CollegeRollNo, @UniversityRollNo, @RegistrationNo, @FirstName, @LastName, @Session, @Section, 0, @Email); " +
                 "SELECT SCOPE_IDENTITY()";
 
             obj.StudentId = await _database.QuerySingleAsync<int>(sql, parameters: obj);
@@ -71,7 +71,7 @@ namespace MarkMe.Core.Repositories
                 UPDATE Students
                 SET
                     CollegeRollNo = @CollegeRollNo, UniversityRollNo = @UniversityRollNo, RegistrationNo = @RegistrationNo,
-                    FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section
+                    FirstName = @FirstName, LastName = @LastName, Session = @Session, Section = @Section, Email = @Email
                     WHERE StudentId = @StudentId;
                 
                 SELECT * FROM Students WHERE StudentId = @StudentId
