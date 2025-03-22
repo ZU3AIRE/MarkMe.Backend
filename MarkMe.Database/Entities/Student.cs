@@ -22,6 +22,9 @@ namespace MarkMe.Database.Entities
         [StringLength(50)]
         public string LastName { get; set; } = string.Empty;
 
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
         [StringLength(9, ErrorMessage = "Session cannot be longer than 9 characters.")]
         public string Session { get; set; } = string.Empty;
 

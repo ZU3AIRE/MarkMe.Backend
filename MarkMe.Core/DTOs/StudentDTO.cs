@@ -16,6 +16,7 @@ namespace MarkMe.Core.DTOs
         public string RegistrationNo { get; set; }
         public string Session { get; set; }
         public string Section { get; set; }
+        public string Email { get; set; }
     }
     public class CreateStudentDTO
     {
@@ -26,5 +27,6 @@ namespace MarkMe.Core.DTOs
         public string RegistrationNo { get; set; }
         public string Session { get; set; }
         public string Section { get; set; }
+        public string Email { get; set; }
     }
 }
