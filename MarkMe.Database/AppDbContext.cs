@@ -512,7 +512,8 @@ namespace MarkMe.Database
                     StudentId = 1,
                     CourseId = 1,
                     DateMarked = new DateTime(2024, 1, 1, 12,3,11),
-                    MarkedBy = 1
+                    MarkedBy = 1,
+                    Status = AttendanceStatus.Present
                 },
                 new Attendance
                 {
@@ -520,7 +521,8 @@ namespace MarkMe.Database
                     StudentId = 2,
                     CourseId = 1,
                     DateMarked = new DateTime(2024, 1, 2, 12,3,11),
-                    MarkedBy = 1
+                    MarkedBy = 1,
+                    Status = AttendanceStatus.Present
                 },
                 new Attendance
                 {
@@ -528,7 +530,8 @@ namespace MarkMe.Database
                     StudentId = 3,
                     CourseId = 1,
                     DateMarked = new DateTime(2024, 1, 3, 12,3,11),
-                    MarkedBy = 2
+                    MarkedBy = 2,
+                    Status = AttendanceStatus.Present
                 },
                 new Attendance
                 {
@@ -536,7 +539,8 @@ namespace MarkMe.Database
                     StudentId = 4,
                     CourseId = 2,
                     DateMarked = new DateTime(2024, 1, 4, 12,3,11),
-                    MarkedBy = 2
+                    MarkedBy = 2,
+                    Status = AttendanceStatus.Late
                 },
                 new Attendance
                 {
@@ -544,7 +548,8 @@ namespace MarkMe.Database
                     StudentId = 5,
                     CourseId = 1,
                     DateMarked = new DateTime(2024, 1, 5, 12,3,11),
-                    MarkedBy = 1
+                    MarkedBy = 1,
+                    Status = AttendanceStatus.Late
                 },
                 new Attendance
                 {
@@ -552,7 +557,8 @@ namespace MarkMe.Database
                     StudentId = 4,
                     CourseId = 1,
                     DateMarked = new DateTime(2024, 1, 4, 12,3,11),
-                    MarkedBy = 2
+                    MarkedBy = 2,
+                    Status = AttendanceStatus.Absent
                 },
                 new Attendance
                 {
@@ -560,7 +566,8 @@ namespace MarkMe.Database
                     StudentId = 5,
                     CourseId = 2,
                     DateMarked = new DateTime(2024, 1, 5, 12,3,11),
-                    MarkedBy = 1
+                    MarkedBy = 1,
+                    Status = AttendanceStatus.Absent
                 },
             });
 

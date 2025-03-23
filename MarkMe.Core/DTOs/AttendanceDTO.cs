@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkMe.Database.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace MarkMe.Core.DTOs
     {
         public int CourseId { get; set; }
         public string StudentsRollNos { get; set; }
+        public int Status { get; set; }
     }
 
     public class AttendanceDTO
@@ -17,6 +19,7 @@ namespace MarkMe.Core.DTOs
         public int AttendanceId { get; set; }
         public int CourseId { get; set; }
         public List<int> StudentIds { get; set; }
+        public AttendanceStatus AttendanceStatus { get; set; }
     }
 
     public class UpdateAttendanceDTO
