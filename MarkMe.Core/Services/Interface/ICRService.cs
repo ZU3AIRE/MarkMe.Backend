@@ -9,8 +9,7 @@ namespace MarkMe.Core.Services.Interface
         Task<CRDTO?> GetAsync(int studentId);
         Task<IEnumerable<CRDTO>> GetAllAsync();
         Task<IEnumerable<CRDTO>> ToggleActive(int studentId, bool isDisabled);
-
         //Task<CourseDTO> UpdateAsync(CourseDTO course);
-        //Task<bool> DeleteAsync(int courseId);
+        Task<bool> DeleteAsync(int studentId);
     }
 }
