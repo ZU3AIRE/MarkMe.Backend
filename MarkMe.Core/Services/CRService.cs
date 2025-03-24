@@ -91,11 +91,11 @@ namespace MarkMe.Core.Services
             try
             {
                 var usrs = await clerkClient.Users.ListAsync();
-                usrs.UserList?.ForEach(async (user) =>
+                usrs.UserList?.ForEach((user) =>
                 {
                     if (user.EmailAddresses?.FirstOrDefault(x => x.EmailAddressValue == email) is not null)
                     {
-                        await clerkClient.Users.DeleteAsync(user.Id);
+                        clerkClient.Users.DeleteAsync(user.Id).GetAwaiter().GetResult();
                         deleted =  true;
                     }
                 });
