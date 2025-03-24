@@ -85,9 +85,19 @@ namespace MarkMe.Core.Repositories
             return all;
         }
 
-        public async Task<CRDTO?> GetAsync(int studentId)
+        public async Task<bool> DeleteAsync(int studentId)
         {
             var sql = """ 
+                        DELETE FROM ClassRepresentatives
+                        WHERE StudentId = @StudentId
+                    """;
+            var rowsAffected = await _database.ExecuteAsync(sql, new { StudentId = studentId });
+            return rowsAffected > 0;
+        }
+
+        public async Task<CRDTO?> GetAsync(int studentId)
+        {
+            var sql = """
 					SELECT
 						Students.StudentId,
 						Students.FirstName, 

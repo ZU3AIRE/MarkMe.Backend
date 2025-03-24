@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250312164226_Seedemail")]
+    partial class Seedemail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +168,6 @@ namespace MarkMe.Database.Migrations
                     b.Property<int>("MarkedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
@@ -182,7 +182,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 1,
                             DateMarked = new DateTime(2024, 1, 1, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 1,
-                            Status = 2,
                             StudentId = 1
                         },
                         new
@@ -191,7 +190,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 1,
                             DateMarked = new DateTime(2024, 1, 2, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 1,
-                            Status = 2,
                             StudentId = 2
                         },
                         new
@@ -200,7 +198,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 1,
                             DateMarked = new DateTime(2024, 1, 3, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 2,
-                            Status = 2,
                             StudentId = 3
                         },
                         new
@@ -209,7 +206,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 2,
                             DateMarked = new DateTime(2024, 1, 4, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 2,
-                            Status = 4,
                             StudentId = 4
                         },
                         new
@@ -218,7 +214,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 1,
                             DateMarked = new DateTime(2024, 1, 5, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 1,
-                            Status = 4,
                             StudentId = 5
                         },
                         new
@@ -227,7 +222,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 1,
                             DateMarked = new DateTime(2024, 1, 4, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 2,
-                            Status = 1,
                             StudentId = 4
                         },
                         new
@@ -236,7 +230,6 @@ namespace MarkMe.Database.Migrations
                             CourseId = 2,
                             DateMarked = new DateTime(2024, 1, 5, 12, 3, 11, 0, DateTimeKind.Unspecified),
                             MarkedBy = 1,
-                            Status = 1,
                             StudentId = 5
                         });
                 });

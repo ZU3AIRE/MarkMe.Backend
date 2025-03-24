@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MarkMe.Database.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarkMe.Database.Entities
 {
@@ -11,5 +12,6 @@ namespace MarkMe.Database.Entities
 
         [ForeignKey("User")]
         public int MarkedBy { get; set; }
+        public AttendanceStatus Status { get; set; }
     }
 }

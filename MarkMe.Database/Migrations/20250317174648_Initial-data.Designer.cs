@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317174648_Initial-data")]
+    partial class Initialdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,6 +264,96 @@ namespace MarkMe.Database.Migrations
                     b.HasKey("StudentId", "CourseId");
 
                     b.ToTable("ClassRepresentatives");
+
+                    b.HasData(
+                        new
+                        {
+                            StudentId = 1,
+                            CourseId = 1,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            CourseId = 2,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            CourseId = 1,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            CourseId = 3,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            CourseId = 4,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            CourseId = 5,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 3,
+                            CourseId = 3,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 4,
+                            CourseId = 4,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 5,
+                            CourseId = 5,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 6,
+                            CourseId = 1,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        },
+                        new
+                        {
+                            StudentId = 7,
+                            CourseId = 2,
+                            IsDeleted = 0,
+                            IsDisabled = false,
+                            NominatedBy = 1
+                        });
                 });
 
             modelBuilder.Entity("MarkMe.Database.Entities.Course", b =>
@@ -557,10 +650,6 @@ namespace MarkMe.Database.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("nvarchar(4)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -612,7 +701,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 1,
                             CollegeRollNo = "501",
-                            Email = "mnaeem@gmail.com",
                             FirstName = "Mousa",
                             IsDeleted = false,
                             LastName = "Naeem",
@@ -625,7 +713,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 2,
                             CollegeRollNo = "539",
-                            Email = "asattar@gmail.com",
                             FirstName = "Aftab",
                             IsDeleted = false,
                             LastName = "Sattar",
@@ -638,7 +725,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 3,
                             CollegeRollNo = "540",
-                            Email = "asenior@gmail.com",
                             FirstName = "Ali",
                             IsDeleted = false,
                             LastName = "Senior",
@@ -651,7 +737,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 4,
                             CollegeRollNo = "541",
-                            Email = "aali@gmail.com",
                             FirstName = "Ahmed",
                             IsDeleted = false,
                             LastName = "Ali",
@@ -664,7 +749,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 5,
                             CollegeRollNo = "542",
-                            Email = "asad@gmail.com",
                             FirstName = "Asad",
                             IsDeleted = false,
                             LastName = "Mojenzo",
@@ -677,7 +761,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 6,
                             CollegeRollNo = "543",
-                            Email = "adildar@gmail.com",
                             FirstName = "Ahsan",
                             IsDeleted = false,
                             LastName = "Dildar",
@@ -690,7 +773,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 7,
                             CollegeRollNo = "544",
-                            Email = "masgher@gmail.com",
                             FirstName = "Minal",
                             IsDeleted = false,
                             LastName = "Asgher",
@@ -703,7 +785,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 8,
                             CollegeRollNo = "545",
-                            Email = "wmaqsood@gmail.com",
                             FirstName = "Wajeeha",
                             IsDeleted = false,
                             LastName = "Maqsood",
@@ -716,7 +797,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 9,
                             CollegeRollNo = "546",
-                            Email = "maqdas@gmail.com",
                             FirstName = "Mahnoor",
                             IsDeleted = false,
                             LastName = "Aqdas",
@@ -729,7 +809,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 10,
                             CollegeRollNo = "547",
-                            Email = "naslam@gmail.com",
                             FirstName = "Nasir",
                             IsDeleted = false,
                             LastName = "Aslam",
@@ -742,7 +821,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 11,
                             CollegeRollNo = "548",
-                            Email = "matif@gmail.com",
                             FirstName = "Mehrooz",
                             IsDeleted = false,
                             LastName = "Atif",
@@ -755,7 +833,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 12,
                             CollegeRollNo = "549",
-                            Email = "aali@gmail.com",
                             FirstName = "Akther",
                             IsDeleted = false,
                             LastName = "Ali",
@@ -768,7 +845,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 13,
                             CollegeRollNo = "550",
-                            Email = "aabbas@gmail.com",
                             FirstName = "Adeel",
                             IsDeleted = false,
                             LastName = "Abbas",
@@ -781,7 +857,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 14,
                             CollegeRollNo = "551",
-                            Email = "rshahmeer@gmail.com",
                             FirstName = "Rohan",
                             IsDeleted = false,
                             LastName = "Shahmeer",
@@ -794,7 +869,6 @@ namespace MarkMe.Database.Migrations
                         {
                             StudentId = 15,
                             CollegeRollNo = "552",
-                            Email = "ashamraiz@gmail.com",
                             FirstName = "Amber",
                             IsDeleted = false,
                             LastName = "Shamraiz",

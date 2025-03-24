@@ -49,5 +49,12 @@ namespace MarkMe.WebAPI.Controllers
             var all = await _crService.ToggleActive(studentId, isDisabled);
             return Ok(all);
         }
+
+        [HttpGet("{studentId}")]
+        public async Task<ActionResult> DeleteCR(int studentId)
+        {
+            var all = await _crService.DeleteAsync(studentId);
+            return Ok(all);
+        }
     }   
 }

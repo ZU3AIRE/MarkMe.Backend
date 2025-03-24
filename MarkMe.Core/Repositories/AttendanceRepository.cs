@@ -1,5 +1,6 @@
 ﻿using MarkMe.Core.DTOs;
 using MarkMe.Core.Repositories.Interface;
+using MarkMe.Database.Enums;
 using MarkMe.Database.Interface;
 
 namespace MarkMe.Core.Repositories
@@ -11,8 +12,8 @@ namespace MarkMe.Core.Repositories
             // In place of Class Representative Student Id we will use when the login of the CR will be created and then we will use it's id.
             var description = $"Marked Attendance for {courseTitle}.";
             var sql = """
-                INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked)
-                VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), GETDATE())
+                INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked, Status)
+                VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), GETDATE(), @AttendanceStatus)
 
                 IF EXISTS(Select * from Users where Email =@Email AND UserId = 3)
                 BEGIN
@@ -25,7 +26,8 @@ namespace MarkMe.Core.Repositories
                 obj.CourseId,
                 StudentId = studentId,
                 Email = userEmail,
-                description
+                description,
+                obj.AttendanceStatus
             });
 
             var rowsAffected = await _database.ExecuteAsync(sql, parameters);
@@ -64,7 +66,7 @@ namespace MarkMe.Core.Repositories
         public async Task<IEnumerable<AttendanceDataModel>> GetAllAsync()
         {
             var sql = """
-                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy
+                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy, a.Status
                     FROM Attendances a
                     INNER JOIN Students s 
                     ON s.StudentId = a.StudentId
@@ -83,7 +85,7 @@ namespace MarkMe.Core.Repositories
         public async Task<IEnumerable<AttendanceDataModel?>> GetByCourseIdAsync(int courseId)
         {
             var sql = """
-                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy
+                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy, a.Status
                     FROM Attendances a
                     INNER JOIN Students s 
                     ON s.StudentId = a.StudentId
@@ -112,7 +114,7 @@ namespace MarkMe.Core.Repositories
         public async Task<AttendanceDataModel?> GetByIdAsync(int attendanceId)
         {
             var sql = """
-                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy
+                SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy, a.Status
                     FROM Attendances a
                     INNER JOIN Students s 
                     ON s.StudentId = a.StudentId
