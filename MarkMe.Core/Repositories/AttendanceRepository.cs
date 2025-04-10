@@ -144,7 +144,7 @@ namespace MarkMe.Core.Repositories
             var sql = """
                 Select CourseId, Code AS CourseCode, Title AS CourseName from Courses Where AssignedTo = (Select UserId from Users where Email =@Email)
                 """;
-            return await _database.QueryAsync<CoursesDTO>(sql, new {Email = email });
+            return await _database.QueryAsync<CoursesDTO>(sql, new { Email = email });
         }
 
         public async Task<IEnumerable<ValidStudents>> GetValidStudents(List<string> rollNos)
@@ -153,8 +153,36 @@ namespace MarkMe.Core.Repositories
                 SELECT StudentId, CollegeRollNo AS RollNo FROM Students 
                 WHERE CollegeRollNo IN @RollNo
                 """;
-            var validStudents = await _database.QueryAsync<ValidStudents>(sql, new { RollNo = rollNos } );
+            var validStudents = await _database.QueryAsync<ValidStudents>(sql, new { RollNo = rollNos });
             return validStudents;
+        }
+
+        public async Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date)
+        {
+            var sql = """
+            SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy, a.Status
+            FROM Attendances a
+            INNER JOIN Students s ON s.StudentId = a.StudentId
+            INNER JOIN Users u ON a.MarkedBy = u.UserId
+            INNER JOIN Courses c ON a.CourseId = c.CourseId
+            WHERE CAST(a.DateMarked AS DATE) = @Date
+            ORDER BY a.DateMarked DESC
+            """;
+            return await _database.QueryAsync<AttendanceDataModel>(sql, new { Date = date });
+        }
+
+        public async Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            var sql = """
+            SELECT a.AttendanceId, a.CourseId, a.StudentId, (s.FirstName + ' ' + s.LastName) AS Name, s.UniversityRollNo, s.CollegeRollNo, c.Code AS CourseCode, c.Title AS CourseTitle, c.Semester, a.DateMarked, (u.FirstName + ' ' + u.LastName ) AS MarkedBy, a.Status
+            FROM Attendances a
+            INNER JOIN Students s ON s.StudentId = a.StudentId
+            INNER JOIN Users u ON a.MarkedBy = u.UserId
+            INNER JOIN Courses c ON a.CourseId = c.CourseId
+            WHERE a.DateMarked BETWEEN @StartDate AND @EndDate
+            ORDER BY a.DateMarked DESC
+            """;
+            return await _database.QueryAsync<AttendanceDataModel>(sql, new { StartDate = startDate, EndDate = endDate });
         }
     }
 }
