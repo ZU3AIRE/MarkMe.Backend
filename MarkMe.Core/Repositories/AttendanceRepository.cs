@@ -165,7 +165,7 @@ namespace MarkMe.Core.Repositories
             INNER JOIN Students s ON s.StudentId = a.StudentId
             INNER JOIN Users u ON a.MarkedBy = u.UserId
             INNER JOIN Courses c ON a.CourseId = c.CourseId
-            WHERE CAST(a.DateMarked AS DATE) = @Date
+            WHERE CONVERT(date, a.DateMarked) = @Date
             ORDER BY a.DateMarked DESC
             """;
             return await _database.QueryAsync<AttendanceDataModel>(sql, new { Date = date });
@@ -179,7 +179,7 @@ namespace MarkMe.Core.Repositories
             INNER JOIN Students s ON s.StudentId = a.StudentId
             INNER JOIN Users u ON a.MarkedBy = u.UserId
             INNER JOIN Courses c ON a.CourseId = c.CourseId
-            WHERE a.DateMarked BETWEEN @StartDate AND @EndDate
+            WHERE CONVERT(DATE, a.DateMarked) BETWEEN @StartDate AND @EndDate
             ORDER BY a.DateMarked DESC
             """;
             return await _database.QueryAsync<AttendanceDataModel>(sql, new { StartDate = startDate, EndDate = endDate });
