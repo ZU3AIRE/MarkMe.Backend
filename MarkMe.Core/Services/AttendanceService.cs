@@ -1,6 +1,12 @@
-﻿using MarkMe.Core.DTOs;
+﻿using Azure.AI.TextAnalytics;
+using Azure;
+using MarkMe.Core.DTOs;
 using MarkMe.Core.Repositories.Interface;
 using MarkMe.Core.Services.Interface;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using Azure.Identity;
 
 namespace MarkMe.Core.Services
 {
@@ -61,6 +67,28 @@ namespace MarkMe.Core.Services
         public async Task<IEnumerable<ValidStudents>> GetValidStudentsByRollNumbersAsync(List<string> rollNos)
         {
             return await _attendanceRepository.GetValidStudents(rollNos);
+        }
+
+        public async Task<List<EntityExtraction>?> GetByPrompt(PromptAttendance userPrompt)
+        {
+            var endpoint = "https://markmener.cognitiveservices.azure.com/";
+            var apiKey = "2bZYI01YwDKeL7GomDaMeeqFUQwcfoLcK0lfyWIo5hdnyrq3NCT3JQQJ99BCACYeBjFXJ3w3AAAaACOGUGQ3";
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            var response =  client.RecognizeEntities(userPrompt.Prompt, "en");
+            List<EntityExtraction> ent = new List<EntityExtraction>();
+
+            foreach (var s in response.Value)
+            {
+                ent.Add(new EntityExtraction
+                {
+                    Text = s.Text,
+                    Category = s.Category.ToString(),
+                    subCategory = s.SubCategory
+                });
+            }
+
+            return ent;
         }
     }
 }

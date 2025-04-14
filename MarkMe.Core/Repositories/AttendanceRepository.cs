@@ -156,5 +156,10 @@ namespace MarkMe.Core.Repositories
             var validStudents = await _database.QueryAsync<ValidStudents>(sql, new { RollNo = rollNos } );
             return validStudents;
         }
+
+        public Task<AttendanceDataModel> GetAttendancebyPromt(PromptAttendance prompt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

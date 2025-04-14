@@ -130,5 +130,12 @@ namespace MarkMe.WebAPI.Controllers
             var attend = await _attendanceService.GetByCourseId(id);
             return (attend != null) ? Ok(attend) : NotFound();
         }
+
+        [HttpPost]
+        public async Task<ActionResult<List<EntityExtraction>?>> GetAttendanceByPrompt(PromptAttendance prompt)
+        {
+            var attend = await _attendanceService.GetByPrompt(prompt);
+            return (attend != null) ? Ok(attend) : NotFound();
+        }
     }
 }

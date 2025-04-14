@@ -33,4 +33,9 @@ namespace MarkMe.Core.DTOs
     {
         public List<int> AttendanceIds { get; set; }
     }
+
+    public class PromptAttendance
+    {
+        public string Prompt { get; set; }
+    }
 }
