@@ -19,5 +19,7 @@ namespace MarkMe.Core.Repositories.Interface
         Task<bool> DeleteAsync(int id);
         Task<AttendanceDataModel?> GetByIdAsync(int id);
         Task<bool> BulkDeleteAsync(BulkDeleteAttendanceDTO attendanceIds);
+        Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date);
+        Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate);
     }
 }
