@@ -1,22 +1,11 @@
-﻿using Azure;
-using MarkMe.Core.DTOs;
+﻿using MarkMe.Core.DTOs;
 using MarkMe.Core.Repositories.Interface;
 using MarkMe.Core.Services.Interface;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using Azure.Identity;
-using OpenAI;
 using Microsoft.Extensions.Configuration;
-using Azure.Core;
 using OpenAI.Chat;
-using MarkMe.Database.Enums;
 using Azure.AI.OpenAI;
 using System.ClientModel;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using OpenAI.Models;
-using Azure.AI.OpenAI.Chat;
-using Microsoft.IdentityModel.Tokens;
+
 
 namespace MarkMe.Core.Services
 {
