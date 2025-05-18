@@ -1,5 +1,4 @@
-﻿using Azure.AI.TextAnalytics;
-using Azure;
+﻿using Azure;
 using MarkMe.Core.DTOs;
 using MarkMe.Core.Repositories.Interface;
 using MarkMe.Core.Services.Interface;
@@ -7,10 +6,23 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using Azure.Identity;
+using OpenAI;
+using Microsoft.Extensions.Configuration;
+using Azure.Core;
+using OpenAI.Chat;
+using MarkMe.Database.Enums;
+using Azure.AI.OpenAI;
+using System.ClientModel;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using OpenAI.Models;
+using Azure.AI.OpenAI.Chat;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MarkMe.Core.Services
 {
-    public class AttendanceService(IAttendanceRepository _attendanceRepository, ICourseRepository _courseRepository) : IAttendanceService
+    public class AttendanceService(IAttendanceRepository _attendanceRepository, 
+        ICourseRepository _courseRepository,
+        IConfiguration _configuration) : IAttendanceService
     {
         public async Task<IEnumerable<AttendanceDataModel>> GetAllAsync()
         {
@@ -69,26 +81,59 @@ namespace MarkMe.Core.Services
             return await _attendanceRepository.GetValidStudents(rollNos);
         }
 
-        public async Task<List<EntityExtraction>?> GetByPrompt(PromptAttendance userPrompt)
+        public async Task<IEnumerable<dynamic>> GetByPrompt(PromptAttendance userPrompt)
         {
-            var endpoint = "https://markmener.cognitiveservices.azure.com/";
-            var apiKey = "2bZYI01YwDKeL7GomDaMeeqFUQwcfoLcK0lfyWIo5hdnyrq3NCT3JQQJ99BCACYeBjFXJ3w3AAAaACOGUGQ3";
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var endpoint = new Uri(_configuration["AzureOpenAI:Endpoint"]);
+            var apiKey = new ApiKeyCredential(_configuration["AzureOpenAI:ApiKey"]);
+            var deploymentName = _configuration["AzureOpenAI:Deployment"];
 
-            var response =  client.RecognizeEntities(userPrompt.Prompt, "en");
-            List<EntityExtraction> ent = new List<EntityExtraction>();
+            AzureOpenAIClient _client = new AzureOpenAIClient(endpoint, apiKey);
 
-            foreach (var s in response.Value)
+            var systemChat = @"You are a highly knowledgeable and efficient assistant that converts natural language commands into syntactically correct and optimized SQL queries. 
+                Your sole function is to return valid SQL statements that accurately reflect the user's intent.
+                You must follow these rules: 
+                Only return SQL — no explanations, summaries, or additional text. 
+                Your SQL must strictly conform to the following schema:
+
+                Tables and their columns:
+                - Activities: ActivityId(INT PK), Description(NVARCHAR(MAX)), Date(DATETIME2), ClassRepresentativeStudentId(INT), ClassRepresentativeCourseId(INT)
+                - Attendances: AttendanceId(INT PK), StudentId(INT), CourseId(INT), DateMarked(DATETIME2), MarkedBy(INT), Status(INT)
+                - ClassRepresentatives: StudentId(INT PK), CourseId(INT PK), IsDeleted(INT), NominatedBy(INT), IsDisabled(BIT)
+                - Courses: CourseId(INT PK), Code(NVARCHAR(12)), Title(NVARCHAR(100)), Type(INT), Semester(INT), CreditHours(INT), CreditHoursPerWeek(INT), IsArchived(BIT), AssignedTo(INT)
+                - Departments: DepartmentId(INT PK), Name(NVARCHAR(100)), IsDeleted(BIT)
+                - Enrolments: EnrolmentId(INT PK), StudentId(INT), CourseId(INT)
+                - Menus: MenuId(INT PK), Label(NVARCHAR(MAX)), Url(NVARCHAR(MAX)), Role(INT)
+                - Students: StudentId(INT PK), CollegeRollNo(NVARCHAR(8)), UniversityRollNo(NVARCHAR(12)), RegistrationNo(NVARCHAR(24)), FirstName(NVARCHAR(100)), LastName(NVARCHAR(100)), Session(NVARCHAR(18)), Section(NVARCHAR(18)), IsDeleted(BIT), Email(NVARCHAR(MAX))
+                - Users: UserId(INT PK), FirstName(NVARCHAR(100)), LastName(NVARCHAR(100)), Email(NVARCHAR(200)), Password(NVARCHAR(200)), IsDeleted(BIT)";
+
+           List<ChatMessage> messages = new List<ChatMessage>
+          {
+              new SystemChatMessage(systemChat),
+              new UserChatMessage(userPrompt.Prompt)
+          };
+
+            ChatCompletionOptions chatCompletionsOptions = new ChatCompletionOptions()
             {
-                ent.Add(new EntityExtraction
+                Temperature = 0,
+                MaxOutputTokenCount = 1000,
+                TopP = 1,
+                FrequencyPenalty = 0,
+                PresencePenalty = 0,
+                StopSequences =
                 {
-                    Text = s.Text,
-                    Category = s.Category.ToString(),
-                    subCategory = s.SubCategory
-                });
-            }
+                    ";"
+                }
+            };
 
-            return ent;
+          //var response =  await _client.GetChatClient(deploymentName).CompleteChatAsync(
+          //          messages,
+          //          chatCompletionsOptions,
+          //          cancellationToken: default);
+
+            //var sql = response.Value.Content[0].Text;
+            var data = await _attendanceRepository.GetAttendancebyPromt("Select * from Students");
+
+            return data;
         }
     }
 }

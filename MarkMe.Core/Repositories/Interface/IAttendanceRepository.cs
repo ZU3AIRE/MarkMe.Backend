@@ -19,6 +19,6 @@ namespace MarkMe.Core.Repositories.Interface
         Task<bool> DeleteAsync(int id);
         Task<AttendanceDataModel?> GetByIdAsync(int id);
         Task<bool> BulkDeleteAsync(BulkDeleteAttendanceDTO attendanceIds);
-        Task<AttendanceDataModel> GetAttendancebyPromt(PromptAttendance prompt);
+        Task<IEnumerable<dynamic>> GetAttendancebyPromt(string prompt);
     }
 }

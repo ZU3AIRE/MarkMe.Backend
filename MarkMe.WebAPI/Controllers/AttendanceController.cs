@@ -8,7 +8,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "admin,tutor,cr")]
+    //[Authorize(Roles = "admin,tutor,cr")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
@@ -132,7 +132,7 @@ namespace MarkMe.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<EntityExtraction>?>> GetAttendanceByPrompt(PromptAttendance prompt)
+        public async Task<IActionResult?> GetAttendanceByPrompt(PromptAttendance prompt)
         {
             var attend = await _attendanceService.GetByPrompt(prompt);
             return (attend != null) ? Ok(attend) : NotFound();

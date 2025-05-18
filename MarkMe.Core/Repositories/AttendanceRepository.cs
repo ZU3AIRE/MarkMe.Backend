@@ -157,9 +157,11 @@ namespace MarkMe.Core.Repositories
             return validStudents;
         }
 
-        public Task<AttendanceDataModel> GetAttendancebyPromt(PromptAttendance prompt)
+        public async Task<IEnumerable<dynamic>> GetAttendancebyPromt(string sql)
         {
-            throw new NotImplementedException();
+            var result = await _database.QueryAsync<IEnumerable<dynamic>>(sql);
+
+            return result;
         }
     }
 }
