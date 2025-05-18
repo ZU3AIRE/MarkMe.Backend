@@ -125,13 +125,13 @@ namespace MarkMe.Core.Services
                 }
             };
 
-          //var response =  await _client.GetChatClient(deploymentName).CompleteChatAsync(
-          //          messages,
-          //          chatCompletionsOptions,
-          //          cancellationToken: default);
+            var response = await _client.GetChatClient(deploymentName).CompleteChatAsync(
+                      messages,
+                      chatCompletionsOptions,
+                      cancellationToken: default);
 
-            //var sql = response.Value.Content[0].Text;
-            var data = await _attendanceRepository.GetAttendancebyPromt("Select * from Students");
+            var sql = response.Value.Content[0].Text;
+            var data = await _attendanceRepository.GetAttendancebyPromt(sql);
 
             return data;
         }

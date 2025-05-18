@@ -159,7 +159,7 @@ namespace MarkMe.Core.Repositories
 
         public async Task<IEnumerable<dynamic>> GetAttendancebyPromt(string sql)
         {
-            var result = await _database.QueryAsync<IEnumerable<dynamic>>(sql);
+            var result = await _database.QueryAsync<dynamic>(sql);
 
             return result;
         }
