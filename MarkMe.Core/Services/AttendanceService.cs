@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using OpenAI.Chat;
 using Azure.AI.OpenAI;
 using System.ClientModel;
+using Newtonsoft.Json;
 
 
 namespace MarkMe.Core.Services
@@ -78,22 +79,47 @@ namespace MarkMe.Core.Services
 
             AzureOpenAIClient _client = new AzureOpenAIClient(endpoint, apiKey);
 
-            var systemChat = @"You are a highly knowledgeable and efficient assistant that converts natural language commands into syntactically correct and optimized SQL queries. 
-                Your sole function is to return valid SQL statements that accurately reflect the user's intent.
-                You must follow these rules: 
-                Only return SQL — no explanations, summaries, or additional text. 
-                Your SQL must strictly conform to the following schema:
+            var systemChat = @"You're a smart SQL assistant. You only reply with valid unformatted SQL Server (T-SQL) queries based on user commands. No chitchat, no explaining, no extra info.
+                        Rules:
 
-                Tables and their columns:
-                - Activities: ActivityId(INT PK), Description(NVARCHAR(MAX)), Date(DATETIME2), ClassRepresentativeStudentId(INT), ClassRepresentativeCourseId(INT)
-                - Attendances: AttendanceId(INT PK), StudentId(INT), CourseId(INT), DateMarked(DATETIME2), MarkedBy(INT), Status(INT)
-                - ClassRepresentatives: StudentId(INT PK), CourseId(INT PK), IsDeleted(INT), NominatedBy(INT), IsDisabled(BIT)
-                - Courses: CourseId(INT PK), Code(NVARCHAR(12)), Title(NVARCHAR(100)), Type(INT), Semester(INT), CreditHours(INT), CreditHoursPerWeek(INT), IsArchived(BIT), AssignedTo(INT)
-                - Departments: DepartmentId(INT PK), Name(NVARCHAR(100)), IsDeleted(BIT)
-                - Enrolments: EnrolmentId(INT PK), StudentId(INT), CourseId(INT)
-                - Menus: MenuId(INT PK), Label(NVARCHAR(MAX)), Url(NVARCHAR(MAX)), Role(INT)
-                - Students: StudentId(INT PK), CollegeRollNo(NVARCHAR(8)), UniversityRollNo(NVARCHAR(12)), RegistrationNo(NVARCHAR(24)), FirstName(NVARCHAR(100)), LastName(NVARCHAR(100)), Session(NVARCHAR(18)), Section(NVARCHAR(18)), IsDeleted(BIT), Email(NVARCHAR(MAX))
-                - Users: UserId(INT PK), FirstName(NVARCHAR(100)), LastName(NVARCHAR(100)), Email(NVARCHAR(200)), Password(NVARCHAR(200)), IsDeleted(BIT)";
+                        Always respond in a structured JSON format with two keys: ""sql"" and ""status"".
+
+                        ""sql"" must contain the raw SQL Server-compatible query in one line if possible.
+
+                        ""status"" must be ""success"" if query is returned, otherwise ""failed"".
+
+                        If the query can’t be answered with the given tables/columns, respond like this:
+                        { ""sql"": """", ""status"": ""failed"", ""message"": ""Query out of scope, 😐"" }
+
+                        When filtering by today's date or comparing dates, use the following correct SQL Server format to ignore time:
+                        CAST(DateColumn AS date) = CAST(GETDATE() AS date)
+
+                        Use only the following schema and column mappings:
+
+                        Table: Students
+                        CollegeRollNo (Roll No)
+                        FirstName, LastName (Name)
+                        Other: StudentId, UniversityRollNo, RegistrationNo, Session, Section, IsDeleted, Email
+
+                        Table: Courses
+                        Title (Course)
+                        Other: CourseId, Code, Type, Semester, CreditHours, CreditHoursPerWeek, IsArchived, AssignedTo
+
+                        Table: Attendances
+                        Status (1 = Absent, 2 = Present, 3 = Leave, 4 = Late)
+                        DateMarked (Date)
+                        Other: AttendanceId, StudentId, CourseId, MarkedBy
+
+                        Table: Activities
+                        Description
+                        Date (Date)
+                        Other: ActivityId, ClassRepresentativeStudentId, ClassRepresentativeCourseId
+
+                        Table: ClassRepresentatives
+                        StudentId, CourseId, IsDeleted, NominatedBy, IsDisabled
+
+                        Table: Users
+                        UserId, FirstName, LastName, Email, Password, IsDeleted";
 
            List<ChatMessage> messages = new List<ChatMessage>
           {
@@ -119,8 +145,13 @@ namespace MarkMe.Core.Services
                       chatCompletionsOptions,
                       cancellationToken: default);
 
-            var sql = response.Value.Content[0].Text;
-            var data = await _attendanceRepository.GetAttendancebyPromt(sql);
+            var chat = response.Value.Content[0].Text;
+            var chatResponse = JsonConvert.DeserializeObject<ChatResponseDTO>(chat);
+            IEnumerable<dynamic> data = new List<dynamic>();
+            if (chatResponse.status == "success")
+            {
+                data = await _attendanceRepository.GetAttendancebyPromt(chatResponse.sql);
+            }
 
             return data;
         }
