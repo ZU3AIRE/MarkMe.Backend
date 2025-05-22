@@ -93,6 +93,18 @@ namespace MarkMe.Core.Services
 
                         When filtering by today's date or comparing dates, use the following correct SQL Server format to ignore time:
                         CAST(DateColumn AS date) = CAST(GETDATE() AS date)
+                        
+                        When user requests complete attendance information for students, return meaningful details by joining tables:
+
+                        Student Name (FirstName + LastName)
+
+                        Roll No (CollegeRollNo)
+
+                        Course Title (Courses.Title)
+
+                        Attendance Status (CASE mapping)
+
+                        Date of Attendance (DateMarked)
 
                         Use only the following schema and column mappings:
 
