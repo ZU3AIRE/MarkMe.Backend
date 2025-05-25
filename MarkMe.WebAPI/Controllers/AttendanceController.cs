@@ -8,7 +8,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles = "admin,tutor,cr")]
+    [Authorize(Roles = "admin,tutor,cr")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
