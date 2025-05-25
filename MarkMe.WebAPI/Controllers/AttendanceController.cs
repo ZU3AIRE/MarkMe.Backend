@@ -8,7 +8,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "admin,tutor,cr")]
+    //[Authorize(Roles = "admin,tutor,cr")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
@@ -63,7 +63,7 @@ namespace MarkMe.WebAPI.Controllers
                 {
                     await _attendanceService.AddAsync(attend, email);
                 }
-                if(validRollNumbers.Any() && invalidRollNumbers.Any())
+                if (validRollNumbers.Any() && invalidRollNumbers.Any())
                 {
                     return Ok(new
                     {
@@ -71,13 +71,13 @@ namespace MarkMe.WebAPI.Controllers
                         invalidRollNumbers
                     });
                 }
-                else if(invalidRollNumbers.Any() && !validRollNumbers.Any())
+                else if (invalidRollNumbers.Any() && !validRollNumbers.Any())
                 {
                     return Ok(new
                     {
                         invalidRollNumbers
                     });
-                }    
+                }
 
                 return Ok(new
                 {
@@ -87,7 +87,7 @@ namespace MarkMe.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { ex.Message});
+                return StatusCode(500, new { ex.Message });
             }
         }
 
@@ -136,6 +136,20 @@ namespace MarkMe.WebAPI.Controllers
         {
             var attend = await _attendanceService.GetByPrompt(prompt);
             return (attend != null) ? Ok(attend) : NotFound();
+        }
+
+        [HttpGet("{date}")]
+        public async Task<ActionResult<IEnumerable<AttendanceDataModel>>> GetAttendanceByDate(DateTime date)
+        {
+            var attendances = await _attendanceService.GetAttendanceByDateAsync(date);
+            return (attendances != null) ? Ok(attendances) : NotFound();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AttendanceDataModel>>> GetAttendanceByDateRange(DateTime startDate, DateTime endDate)
+        {
+            var attendances = await _attendanceService.GetAttendanceByDateRangeAsync(startDate, endDate);
+            return (attendances != null) ? Ok(attendances) : NotFound();
         }
     }
 }

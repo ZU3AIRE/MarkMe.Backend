@@ -43,7 +43,7 @@ namespace MarkMe.Core.Services
             }
             var attend = await _attendanceRepository.AddAsync(obj, course.Title, userEmail);
             return attend;
-            
+
 
         }
 
@@ -165,6 +165,16 @@ namespace MarkMe.Core.Services
             }
 
             return data;
+        }
+
+        public async Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date)
+        {
+            return await _attendanceRepository.GetAttendanceByDateAsync(date);
+        }
+
+        public async Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _attendanceRepository.GetAttendanceByDateRangeAsync(startDate, endDate);
         }
     }
 }

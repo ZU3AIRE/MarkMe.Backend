@@ -4,6 +4,7 @@ using MarkMe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarkMe.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416114410_Seeded automark menu")]
+    partial class Seededautomarkmenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -475,111 +478,90 @@ namespace MarkMe.Database.Migrations
                         new
                         {
                             MenuId = 7,
-                            Label = "Chatbot",
-                            Role = 0,
-                            Url = "chatbot"
-                        },
-                        new
-                        {
-                            MenuId = 8,
                             Label = "Mark Attendance",
                             Role = 1,
                             Url = "attendance"
                         },
                         new
                         {
-                            MenuId = 9,
+                            MenuId = 8,
                             Label = "Export/Share",
                             Role = 1,
                             Url = "export"
                         },
                         new
                         {
-                            MenuId = 10,
+                            MenuId = 9,
                             Label = "Courses",
                             Role = 1,
                             Url = "courses"
                         },
                         new
                         {
-                            MenuId = 11,
+                            MenuId = 10,
                             Label = "Students",
                             Role = 1,
                             Url = "students"
                         },
                         new
                         {
-                            MenuId = 12,
+                            MenuId = 11,
                             Label = "Class Representative",
                             Role = 1,
                             Url = "class-representatives"
                         },
                         new
                         {
-                            MenuId = 13,
+                            MenuId = 12,
                             Label = "Auto Mark",
                             Role = 1,
                             Url = "automark"
                         },
                         new
                         {
-                            MenuId = 14,
-                            Label = "Chatbot",
-                            Role = 1,
-                            Url = "chatbot"
-                        },
-                        new
-                        {
-                            MenuId = 15,
+                            MenuId = 13,
                             Label = "Mark Attendance",
                             Role = 2,
                             Url = "attendance"
                         },
                         new
                         {
-                            MenuId = 16,
+                            MenuId = 14,
                             Label = "Export/Share",
                             Role = 2,
                             Url = "export"
                         },
                         new
                         {
-                            MenuId = 17,
+                            MenuId = 15,
                             Label = "Auto Mark",
                             Role = 2,
                             Url = "automark"
                         },
                         new
                         {
-                            MenuId = 18,
-                            Label = "Chatbot",
-                            Role = 2,
-                            Url = "chatbot"
-                        },
-                        new
-                        {
-                            MenuId = 19,
+                            MenuId = 16,
                             Label = "Export/Share",
                             Role = 3,
                             Url = "export"
                         },
                         new
                         {
-                            MenuId = 20,
+                            MenuId = 17,
                             Label = "Courses",
                             Role = 3,
                             Url = "courses"
                         },
                         new
                         {
-                            MenuId = 21,
+                            MenuId = 18,
                             Label = "Students",
                             Role = 3,
                             Url = "students"
                         },
                         new
                         {
-                            MenuId = 22,
+                            MenuId = 19,
                             Label = "Class Representative",
                             Role = 3,
                             Url = "class-representatives"

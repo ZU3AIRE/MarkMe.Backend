@@ -579,24 +579,27 @@ namespace MarkMe.Database
                 new Menu { MenuId = 3, Label = "Courses", Url = "courses", Role = Role.Admin },
                 new Menu { MenuId = 4, Label = "Students", Url = "students", Role = Role.Admin },
                 new Menu { MenuId = 5, Label = "Class Representative", Url = "class-representatives", Role = Role.Admin },
-                new Menu { MenuId = 6, Label = "Chatbot", Url = "chatbot", Role = Role.Admin},
+                new Menu { MenuId = 6, Label = "Auto Mark", Url = "automark", Role = Role.Admin },
+                new Menu { MenuId = 7, Label = "Chatbot", Url = "chatbot", Role = Role.Admin},
 
-                new Menu { MenuId = 7, Label = "Mark Attendance", Url = "attendance", Role = Role.Tutor },
-                new Menu { MenuId = 8, Label = "Export/Share", Url = "export", Role = Role.Tutor },
-                new Menu { MenuId = 9, Label = "Courses", Url = "courses", Role = Role.Tutor },
-                new Menu { MenuId = 10, Label = "Students", Url = "students", Role = Role.Tutor },
-                new Menu { MenuId = 11, Label = "Class Representative", Url = "class-representatives", Role = Role.Tutor },
-                new Menu { MenuId = 12, Label = "Chatbot", Url = "chatbot", Role = Role.Tutor },
+                new Menu { MenuId = 8, Label = "Mark Attendance", Url = "attendance", Role = Role.Tutor },
+                new Menu { MenuId = 9, Label = "Export/Share", Url = "export", Role = Role.Tutor },
+                new Menu { MenuId = 10, Label = "Courses", Url = "courses", Role = Role.Tutor },
+                new Menu { MenuId = 11, Label = "Students", Url = "students", Role = Role.Tutor },
+                new Menu { MenuId = 12, Label = "Class Representative", Url = "class-representatives", Role = Role.Tutor },
+                new Menu { MenuId = 13, Label = "Auto Mark", Url = "automark", Role = Role.Tutor },
+                new Menu { MenuId = 14, Label = "Chatbot", Url = "chatbot", Role = Role.Tutor },
 
-                new Menu { MenuId = 13, Label = "Mark Attendance", Url = "attendance", Role = Role.CR },
-                new Menu { MenuId = 14, Label = "Export/Share", Url = "export", Role = Role.CR },
-                new Menu { MenuId = 15, Label = "Chatbot", Url = "chatbot", Role = Role.CR },
+                new Menu { MenuId = 15, Label = "Mark Attendance", Url = "attendance", Role = Role.CR },
+                new Menu { MenuId = 16, Label = "Export/Share", Url = "export", Role = Role.CR },
+                new Menu { MenuId = 17, Label = "Auto Mark", Url = "automark", Role = Role.CR },
+                new Menu { MenuId = 18, Label = "Chatbot", Url = "chatbot", Role = Role.CR },
 
                 // For Readonly Purposes
-                new Menu { MenuId = 16, Label = "Export/Share", Url = "export", Role = Role.Member },
-                new Menu { MenuId = 17, Label = "Courses", Url = "courses", Role = Role.Member },
-                new Menu { MenuId = 18, Label = "Students", Url = "students", Role = Role.Member },
-                new Menu { MenuId = 19, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
+                new Menu { MenuId = 19, Label = "Export/Share", Url = "export", Role = Role.Member },
+                new Menu { MenuId = 20, Label = "Courses", Url = "courses", Role = Role.Member },
+                new Menu { MenuId = 21, Label = "Students", Url = "students", Role = Role.Member },
+                new Menu { MenuId = 22, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
             });
         }
     }
