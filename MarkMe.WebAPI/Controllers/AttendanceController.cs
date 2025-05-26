@@ -131,6 +131,13 @@ namespace MarkMe.WebAPI.Controllers
             return (attend != null) ? Ok(attend) : NotFound();
         }
 
+        [HttpPost]
+        public async Task<IActionResult?> GetAttendanceByPrompt(PromptAttendance prompt)
+        {
+            var attend = await _attendanceService.GetByPrompt(prompt);
+            return (attend != null) ? Ok(attend) : NotFound();
+        }
+
         [HttpGet("{date}")]
         public async Task<ActionResult<IEnumerable<AttendanceDataModel>>> GetAttendanceByDate(DateTime date)
         {

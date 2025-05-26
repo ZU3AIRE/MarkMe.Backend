@@ -7,7 +7,7 @@
 namespace MarkMe.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Seededautomarkmenu : Migration
+    public partial class Chatbot : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace MarkMe.Database.Migrations
                 keyColumn: "MenuId",
                 keyValue: 6,
                 columns: new[] { "Label", "Role", "Url" },
-                values: new object[] { "Auto Mark", 0, "automark" });
+                values: new object[] { "Chatbot", 0, "chatbot" });
 
             migrationBuilder.UpdateData(
                 table: "Menus",
@@ -59,7 +59,7 @@ namespace MarkMe.Database.Migrations
                 keyColumn: "MenuId",
                 keyValue: 12,
                 columns: new[] { "Label", "Role", "Url" },
-                values: new object[] { "Auto Mark", 1, "automark" });
+                values: new object[] { "Chatbot", 1, "chatbot" });
 
             migrationBuilder.UpdateData(
                 table: "Menus",
@@ -73,7 +73,7 @@ namespace MarkMe.Database.Migrations
                 keyColumn: "MenuId",
                 keyValue: 15,
                 columns: new[] { "Label", "Role", "Url" },
-                values: new object[] { "Auto Mark", 2, "automark" });
+                values: new object[] { "Chatbot", 2, "chatbot" });
 
             migrationBuilder.UpdateData(
                 table: "Menus",
@@ -88,6 +88,16 @@ namespace MarkMe.Database.Migrations
                 keyValue: 17,
                 columns: new[] { "Label", "Url" },
                 values: new object[] { "Courses", "courses" });
+
+            migrationBuilder.InsertData(
+                table: "Menus",
+                columns: new[] { "MenuId", "Label", "Role", "Url" },
+                values: new object[,]
+                {
+                    { 13, "Mark Attendance", 2, "attendance" },
+                    { 18, "Students", 3, "students" },
+                    { 19, "Class Representative", 3, "class-representatives" }
+                });
         }
 
         /// <inheritdoc />

@@ -14,6 +14,7 @@ namespace MarkMe.Core.Services.Interface
         Task<bool> DeleteAsync(int attendanceId);
         Task<bool> BulkDeleteAsync(BulkDeleteAttendanceDTO attendanceIds);
         Task<AttendanceDataModel?> GetByIdAsync(int attendanceId);
+        Task<IEnumerable<dynamic>> GetByPrompt(PromptAttendance prompt);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate);
     }
