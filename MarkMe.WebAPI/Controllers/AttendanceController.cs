@@ -151,5 +151,26 @@ namespace MarkMe.WebAPI.Controllers
             var attendances = await _attendanceService.GetAttendanceByDateRangeAsync(startDate, endDate);
             return (attendances != null) ? Ok(attendances) : NotFound();
         }
+
+        [HttpPost("upload-face")]
+        public async Task<IActionResult> UploadFace(IFormFile image, [FromQuery] string studentId)
+        {
+            if (image == null || image.Length == 0)
+                return BadRequest("No image uploaded.");
+
+            var folderPath = Path.Combine("wwwroot", "faceimages", studentId);
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            var filePath = Path.Combine(folderPath, $"{Guid.NewGuid()}.jpg");
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            return Ok(new { message = "Image saved successfully", path = filePath });
+        }
+
     }
 }
