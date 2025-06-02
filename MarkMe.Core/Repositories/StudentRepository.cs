@@ -80,5 +80,15 @@ namespace MarkMe.Core.Repositories
             var updated = await _database.QuerySingleAsync<StudentDTO>(sql, updatedObj);
             return updated;
         }
+
+        public async Task<IEnumerable<StudentDataModel>> GetStudentsNameAsync()
+        {
+            var sql = """
+                SELECT StudentId, CONCAT(FirstName, ' ', LastName) AS StudentName FROM Students;
+                """;
+
+            var students = await _database.QueryAsync<StudentDataModel>(sql);
+            return students;
+        }
     }
 }

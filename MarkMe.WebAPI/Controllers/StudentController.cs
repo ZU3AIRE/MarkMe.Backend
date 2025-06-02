@@ -1,4 +1,5 @@
 ﻿using MarkMe.Core.DTOs;
+using MarkMe.Core.Services;
 using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,13 @@ namespace MarkMe.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<StudentDTO>>> GetCRNomineesAsync()
         {
             var students = await _studentService.GetCRNomineesAsync();
+            return Ok(students);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<StudentDataModel>>> GetStudentsName()
+        {
+            var students = await _studentService.GetStudentsNameAsync();
             return Ok(students);
         }
     }

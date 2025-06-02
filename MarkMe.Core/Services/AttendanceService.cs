@@ -6,13 +6,19 @@ using OpenAI.Chat;
 using Azure.AI.OpenAI;
 using System.ClientModel;
 using Newtonsoft.Json;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Microsoft.Azure.CognitiveServices.Vision.Face;
+using Azure;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Net;
 
 
 namespace MarkMe.Core.Services
 {
-    public class AttendanceService(IAttendanceRepository _attendanceRepository, 
+    public class AttendanceService(IAttendanceRepository _attendanceRepository,
         ICourseRepository _courseRepository,
-        IConfiguration _configuration) : IAttendanceService
+        IConfiguration _configuration,
+        IStudentRepository _studentRepo) : IAttendanceService
     {
         public async Task<IEnumerable<AttendanceDataModel>> GetAllAsync()
         {
@@ -132,7 +138,7 @@ namespace MarkMe.Core.Services
                             Table: Users  
                             UserId, FirstName, LastName, Email, Password, IsDeleted";
 
-           List<ChatMessage> messages = new List<ChatMessage>
+            List<ChatMessage> messages = new List<ChatMessage>
           {
               new SystemChatMessage(systemChat),
               new UserChatMessage(userPrompt.Prompt)
@@ -175,6 +181,62 @@ namespace MarkMe.Core.Services
         public async Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
             return await _attendanceRepository.GetAttendanceByDateRangeAsync(startDate, endDate);
+        }
+
+        public async Task<bool> RegisterFace(StudentImages std)
+        {
+            string personGroupId = _configuration["AzureFace:PersonGroupId"];
+            FaceClient _faceClient = new FaceClient(new ApiKeyServiceClientCredentials(_configuration["AzureFace:ApiKey"]))
+            {
+                Endpoint = _configuration["AzureFace:Endpoint"]
+            };
+
+            var student = await _studentRepo.GetStudentAsync(Convert.ToInt32(std.StudentId));
+
+            try
+            {
+                var personGroup = await _faceClient.PersonGroup.GetAsync(personGroupId);
+                Console.WriteLine("✅ PersonGroup exists: " + personGroup.Name);
+            }
+            catch (APIErrorException ex) when (ex.Response.StatusCode == HttpStatusCode.NotFound)
+            {
+                // PersonGroup does not exist, so create it
+                await _faceClient.PersonGroup.CreateAsync(personGroupId, "Students Group");
+                Console.WriteLine("✅ PersonGroup created.");
+            }
+
+
+            Person person = await _faceClient.PersonGroupPerson.CreateAsync(
+                personGroupId,
+                student.FirstName + " " + student.LastName,
+                userData: $"StudentId:{std.StudentId}"
+            );
+
+            foreach (var image in std.Images)
+            {
+                using var stream = image.OpenReadStream();
+                await _faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
+                    personGroupId,
+                    person.PersonId,
+                    stream
+                );
+            }
+
+            await _faceClient.PersonGroup.TrainAsync(personGroupId);
+
+            TrainingStatus status;
+            do
+            {
+                await Task.Delay(1000);
+                status = await _faceClient.PersonGroup.GetTrainingStatusAsync(personGroupId);
+            } while (status.Status == TrainingStatusType.Running);
+
+            if (status.Status != TrainingStatusType.Succeeded)
+                throw new Exception("Face training failed.");
+
+            return true;
+
+            //await studentService.UpdatePersonIdAsync(std.StudentId, person.PersonId.ToString());
         }
     }
 }

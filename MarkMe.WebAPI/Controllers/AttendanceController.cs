@@ -8,7 +8,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles = "admin,tutor,cr")]
+    [Authorize(Roles = "admin,tutor,cr")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
@@ -152,25 +152,38 @@ namespace MarkMe.WebAPI.Controllers
             return (attendances != null) ? Ok(attendances) : NotFound();
         }
 
-        [HttpPost("upload-face")]
-        public async Task<IActionResult> UploadFace(IFormFile image, [FromQuery] string studentId)
+        [HttpPost]
+        public async Task<IActionResult> UploadFace(StudentImages stdImg)
         {
-            if (image == null || image.Length == 0)
+            if (stdImg.Images == null || stdImg.Images.Length == 0)
                 return BadRequest("No image uploaded.");
 
-            var folderPath = Path.Combine("wwwroot", "faceimages", studentId);
+            var folderPath = Path.Combine("wwwroot", "faceimages", stdImg.StudentId);
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            var filePath = Path.Combine(folderPath, $"{Guid.NewGuid()}.jpg");
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            foreach (var image in stdImg.Images)
             {
-                await image.CopyToAsync(stream);
+                var filePath = Path.Combine(folderPath, $"{Guid.NewGuid()}.jpg");
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
             }
 
-            return Ok(new { message = "Image saved successfully", path = filePath });
+            return Ok(stdImg);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RegisterFace(StudentImages stdImg)
+        {
+            if (stdImg.Images == null || stdImg.Images.Length == 0)
+                return BadRequest("No image uploaded.");
+
+            var res = _attendanceService.RegisterFace(stdImg);
+
+            return (IActionResult)res;
+        }
     }
 }

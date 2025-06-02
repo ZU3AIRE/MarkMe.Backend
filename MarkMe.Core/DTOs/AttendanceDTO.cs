@@ -1,4 +1,5 @@
 ﻿using MarkMe.Database.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,11 @@ namespace MarkMe.Core.DTOs
     public class PromptAttendance
     {
         public string Prompt { get; set; }
+    }
+
+    public class StudentImages
+    {
+        public string StudentId { get; set; }
+        public IFormFile[] Images { get; set; }
     }
 }

@@ -50,5 +50,10 @@ namespace MarkMe.Core.Services
             var updated = await _studRepo.UpdateStudentAsync(updatedObj.StudentId, updatedObj);
             return updated;
         }
+
+        public async Task<IEnumerable<StudentDataModel>> GetStudentsNameAsync()
+        {
+            var students = await _studRepo.GetStudentsNameAsync(); return students;
+        }
     }
 }
