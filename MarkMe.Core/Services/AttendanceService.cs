@@ -11,6 +11,8 @@ using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Azure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Net;
+using System.IO;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 
 
 namespace MarkMe.Core.Services
@@ -192,6 +194,75 @@ namespace MarkMe.Core.Services
             };
 
             var student = await _studentRepo.GetStudentAsync(Convert.ToInt32(std.StudentId));
+
+
+            if (std.Images == null || std.Images.Count() < 2 || std.Images.Count() > 4)
+                throw new Exception("Provide 2 to 4 clear images of the student.");
+
+            var faceIds = new List<Guid>();
+
+            //foreach (var img in std.Images)
+            //{
+            //    var stream = img.OpenReadStream(); // Don't use 'using' here
+
+            //    try
+            //    {
+            //        var detectedFaces = await _faceClient.Face.DetectWithStreamAsync(
+            //            stream,
+            //            returnFaceId: true,
+            //            detectionModel: DetectionModel.Detection03
+            //        );
+
+            //        if (detectedFaces == null || detectedFaces.Count != 1)
+            //            throw new Exception("Each image must contain exactly one face.");
+
+            //        faceIds.Add(detectedFaces[0].FaceId.Value);
+            //    }
+            //    catch(Exception ex)
+            //    {
+
+            //    }
+            //    finally
+            //    {
+            //        stream.Dispose(); // Dispose manually AFTER usage
+            //    }
+            //}
+
+            foreach (var img in std.Images)
+            {
+                using var memoryStream = new MemoryStream();
+                await img.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+
+                try
+                {
+                    var detectedFaces = await _faceClient.Face.DetectWithStreamAsync(
+                        memoryStream,
+                        returnFaceId: true,
+                        detectionModel: DetectionModel.Detection03
+                    );
+
+                    if (detectedFaces == null || detectedFaces.Count != 1)
+                        throw new Exception("Each image must contain exactly one face.");
+
+                    faceIds.Add(detectedFaces[0].FaceId.Value);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Detection failed for one image: {ex.Message}");
+                }
+            }
+
+
+            // Now verify that all face IDs are from the same person
+            for (int i = 1; i < faceIds.Count; i++)
+            {
+                var verifyResult = await _faceClient.Face.VerifyFaceToFaceAsync(faceIds[0], faceIds[i]);
+                if (!verifyResult.IsIdentical || verifyResult.Confidence < 0.6)
+                {
+                    throw new Exception("Uploaded images do not appear to be of the same person.");
+                }
+            }
 
             try
             {
