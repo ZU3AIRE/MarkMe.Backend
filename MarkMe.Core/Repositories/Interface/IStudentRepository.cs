@@ -15,5 +15,6 @@ namespace MarkMe.Core.Repositories.Interface
         Task<StudentDTO> AddStudentAsync(StudentDTO student);
         Task<StudentDTO> UpdateStudentAsync(int id, StudentDTO student);
         Task<bool> DeleteStudentAsync(int id);
+        Task<bool> BulkDeleteStudentsAsync(IEnumerable<int> ids);
     }
 }

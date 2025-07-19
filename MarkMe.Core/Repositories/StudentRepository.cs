@@ -60,7 +60,7 @@ namespace MarkMe.Core.Repositories
                         SELECT 1 
                         FROM ClassRepresentatives 
                         WHERE ClassRepresentatives.StudentId = Students.StudentId
-                    )
+                    ) AND IsDeleted = 0
                     """;
             return _database.QueryAsync<StudentDTO>(sql);
         }
@@ -80,5 +80,24 @@ namespace MarkMe.Core.Repositories
             var updated = await _database.QuerySingleAsync<StudentDTO>(sql, updatedObj);
             return updated;
         }
+
+        public async Task<bool> BulkDeleteStudentsAsync(IEnumerable<int> ids)
+        {
+            try
+            {
+                var sql = "UPDATE Students SET IsDeleted = 1 WHERE StudentId IN @Ids";
+                await _database.ExecuteAsync(sql, new { Ids = ids });
+                var sql1 = """
+                    UPDATE ClassRepresentatives SET IsDeleted = 1 WHERE StudentId IN @Ids
+                    """;
+                await _database.ExecuteAsync(sql1, new { Ids = ids });
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

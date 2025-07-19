@@ -11,5 +11,6 @@ namespace MarkMe.Core.Services.Interface
         Task<StudentDTO> UpdateAsync(StudentDTO updatedObj);
         Task<bool> DeleteAsync(int id);
         Task<StudentDTO> AddAsync(CreateStudentDTO obj);
+        Task<bool> BulkDeleteAsync(IEnumerable<int> ids);
     }
 }
