@@ -26,7 +26,8 @@ namespace MarkMe.Core.DTOs
     {
         public int AttendanceId { get; set; }
         public int CourseId { get; set; }
-        public int StudentId { get; set; }
+        public DateTime DateMarked { get; set; }
+        public int AttendanceStatus { get; set; }
     }
 
     public class BulkDeleteAttendanceDTO

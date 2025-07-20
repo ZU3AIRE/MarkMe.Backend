@@ -103,10 +103,10 @@ namespace MarkMe.Core.Repositories
         public async Task<AttendanceDataModel> UpdateAsync(int attendanceId, UpdateAttendanceDTO obj)
         {
             var sql = """
-                UPDATE Attendances SET CourseId = @CourseId, StudentId = @StudentId, MarkedBy = 2, DateMarked = GETDATE()
+                UPDATE Attendances SET CourseId = @CourseId, StudentId = @StudentId, MarkedBy = 2, DateMarked = GETDATE(), Status = @Status
                 WHERE AttendanceId = @AttendanceId
                 """;
-            var updated = await _database.ExecuteAsync(sql, new { obj.CourseId, obj.StudentId, AttendanceId = attendanceId });
+            var updated = await _database.ExecuteAsync(sql, new { obj.CourseId, obj.StudentId, AttendanceId = attendanceId, Status = obj.AttendanceStatus });
             var attend = await GetByIdAsync(attendanceId);
             return attend!;
         }
