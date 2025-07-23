@@ -56,6 +56,7 @@ namespace MarkMe.WebAPI.Controllers
                 {
                     CourseId = obj.CourseId,
                     StudentIds = validStudents.Select(s => s.StudentId).ToList(),
+                    DateMarked = obj.DateMarked,
                     AttendanceStatus = (AttendanceStatus)obj.Status
                 };
 

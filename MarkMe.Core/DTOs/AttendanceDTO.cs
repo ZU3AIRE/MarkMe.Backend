@@ -11,6 +11,7 @@ namespace MarkMe.Core.DTOs
     {
         public int CourseId { get; set; }
         public string StudentsRollNos { get; set; }
+        public DateTime DateMarked { get; set; }
         public int Status { get; set; }
     }
 
@@ -19,6 +20,7 @@ namespace MarkMe.Core.DTOs
         public int AttendanceId { get; set; }
         public int CourseId { get; set; }
         public List<int> StudentIds { get; set; }
+        public DateTime DateMarked { get; set; }
         public AttendanceStatus AttendanceStatus { get; set; }
     }
 
