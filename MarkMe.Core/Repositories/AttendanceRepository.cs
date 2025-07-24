@@ -13,12 +13,12 @@ namespace MarkMe.Core.Repositories
             var description = $"Marked Attendance for {courseTitle}.";
             var sql = """
                 INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked, Status)
-                VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), GETDATE(), @AttendanceStatus)
+                VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), @DateMarked, @AttendanceStatus)
 
                 IF EXISTS(Select * from Users where Email =@Email AND UserId = 3)
                 BEGIN
                     INSERT INTO Activities (Description, Date, ClassRepresentativeStudentId, ClassRepresentativeCourseId)
-                    Values (@description, GETDATE(), 2, @CourseId)
+                    Values (@description, @DateMarked, 2, @CourseId)
                 END
                 """;
             var parameters = obj.StudentIds.Select(studentId => new
@@ -26,6 +26,7 @@ namespace MarkMe.Core.Repositories
                 obj.CourseId,
                 StudentId = studentId,
                 Email = userEmail,
+                obj.DateMarked,
                 description,
                 obj.AttendanceStatus
             });
@@ -103,10 +104,10 @@ namespace MarkMe.Core.Repositories
         public async Task<AttendanceDataModel> UpdateAsync(int attendanceId, UpdateAttendanceDTO obj)
         {
             var sql = """
-                UPDATE Attendances SET CourseId = @CourseId, StudentId = @StudentId, MarkedBy = 2, DateMarked = GETDATE()
+                UPDATE Attendances SET CourseId = @CourseId, MarkedBy = 2, DateMarked = @DateMarked, Status = @Status
                 WHERE AttendanceId = @AttendanceId
                 """;
-            var updated = await _database.ExecuteAsync(sql, new { obj.CourseId, obj.StudentId, AttendanceId = attendanceId });
+            var updated = await _database.ExecuteAsync(sql, new { obj.CourseId, AttendanceId = attendanceId,DateMarked = obj.DateMarked ,Status = obj.AttendanceStatus });
             var attend = await GetByIdAsync(attendanceId);
             return attend!;
         }

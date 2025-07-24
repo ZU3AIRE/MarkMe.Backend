@@ -8,7 +8,7 @@ namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles = "admin,tutor,cr")]
+    [Authorize(Roles = "admin,tutor,cr")]
     public class AttendanceController(IAttendanceService _attendanceService) : Controller
     {
         [HttpGet]
@@ -56,6 +56,7 @@ namespace MarkMe.WebAPI.Controllers
                 {
                     CourseId = obj.CourseId,
                     StudentIds = validStudents.Select(s => s.StudentId).ToList(),
+                    DateMarked = obj.DateMarked,
                     AttendanceStatus = (AttendanceStatus)obj.Status
                 };
 
