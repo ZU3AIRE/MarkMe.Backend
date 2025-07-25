@@ -130,14 +130,15 @@ namespace MarkMe.Core.Repositories
             return attendance;
         }
 
-        public async Task<IEnumerable<CoursesDTO>> GetCoursesAsync()
+        public async Task<IEnumerable<CoursesDTO>> GetCRCourses(string email)
         {
             var sql = """
                 SELECT c.CourseId, c.Title AS CourseName, c.Code AS CourseCode FROM ClassRepresentatives cr
                 INNER JOIN Courses c ON cr.CourseId = c.CourseId
-                WHERE StudentId = 2
+                WHERE StudentId = (SELECT StudentId FROM Students WHERE Email = @Email AND IsDeleted = 0);
                 """;
-            return await _database.QueryAsync<CoursesDTO>(sql);
+            var coursesCR = await _database.QueryAsync<CoursesDTO>(sql, new { Email = email });
+            return coursesCR;
         }
 
         public async Task<IEnumerable<CoursesDTO>> GetTutorCoursesAsync(string email)
