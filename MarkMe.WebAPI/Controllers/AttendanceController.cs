@@ -23,7 +23,8 @@ namespace MarkMe.WebAPI.Controllers
         {
             if (User.IsInRole("cr"))
             {
-                var attend = await _attendanceService.GetCRCoursesAsync();
+                var email = User.Claims.Select(claim => claim.Value).FirstOrDefault();
+                var attend = await _attendanceService.GetCRCoursesAsync(email);
                 return (attend != null) ? Ok(attend) : NotFound();
             }
             else if (User.IsInRole("tutor"))
