@@ -3,6 +3,7 @@ using MarkMe.Core.Services.Interface;
 using MarkMe.Database.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MarkMe.WebAPI.Controllers
 {
@@ -23,14 +24,13 @@ namespace MarkMe.WebAPI.Controllers
         {
             if (User.IsInRole("cr"))
             {
-                var email = User.Claims.Select(claim => claim.Value).FirstOrDefault();
+                var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
                 var attend = await _attendanceService.GetCRCoursesAsync(email);
                 return (attend != null) ? Ok(attend) : NotFound();
             }
             else if (User.IsInRole("tutor"))
             {
-                var userEmail = User.Claims
-                    .Select(claim => claim.Value).FirstOrDefault();
+                var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
                 var attend = await _attendanceService.GetTutorCourses(userEmail);
                 return (attend != null) ? Ok(attend) : NotFound();
             }
@@ -47,7 +47,7 @@ namespace MarkMe.WebAPI.Controllers
 
             try
             {
-                var email = User.Claims.Select(claim => claim.Value).FirstOrDefault();
+                var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
                 var rollNumbers = obj.StudentsRollNos.Split(",").Select(r => r.Trim()).ToList();
                 var validStudents = await _attendanceService.GetValidStudentsByRollNumbersAsync(rollNumbers);
                 var validRollNumbers = validStudents.Select(s => s.RollNo).ToList();
