@@ -52,6 +52,19 @@ namespace MarkMe.WebAPI.Controllers
             return Ok(await _studentService.DeleteAsync(id));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> BulkDeleteStudents([FromBody] IEnumerable<int> ids)
+        {
+            if (ids == null || !ids.Any())
+                return BadRequest("No student IDs provided.");
+
+            var result = await _studentService.BulkDeleteAsync(ids);
+            if (result)
+                return Ok(new { message = "Students deleted successfully." });
+            return StatusCode(500, new { message = "Failed to delete students." });
+        }
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDTO>>> GetCRNomineesAsync()
         {

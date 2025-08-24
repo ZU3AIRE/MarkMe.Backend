@@ -28,15 +28,25 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
-    options.Authority = "https://leading-yak-1.clerk.accounts.dev"; // Replace with your Clerk Issuer
-    //options.Audience = "app_2pYpP3kQKnIA0qWOSW4OkQ883O2"; // Replace with your Clerk Frontend API key (Client ID)
+    options.Authority = "https://leading-yak-1.clerk.accounts.dev";
+    options.Audience = "api://myapi";
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
-        ValidateAudience = false,
+        ValidIssuer = "https://leading-yak-1.clerk.accounts.dev",
+        ValidateAudience = true,
+        ValidAudience = "api://myapi",
         ValidateLifetime = true,
-        ValidIssuer = "https://leading-yak-1.clerk.accounts.dev", // Replace with your Clerk Issuer
-        //ValidAudience = "app_2pYpP3kQKnIA0qWOSW4OkQ883O2", // Replace with your Clerk Frontend API key
+        ValidateIssuerSigningKey = true,
+
+        IssuerSigningKeyResolver = (token, securityToken, kid, validationParameters) =>
+        {
+            using var http = new HttpClient();
+            var json = http.GetStringAsync("https://leading-yak-1.clerk.accounts.dev/.well-known/jwks.json")
+                            .GetAwaiter().GetResult();
+            var jwks = new JsonWebKeySet(json);
+            return jwks.Keys;
+        }
     };
 });
 
@@ -49,12 +59,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Use CORS policy
+app.UseCors("AllowLocalhost3000");
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Use CORS policy
-app.UseCors("AllowLocalhost3000");
 
 app.MapControllers();
 

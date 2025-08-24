@@ -10,7 +10,7 @@ namespace MarkMe.Core.Repositories.Interface
     public interface IAttendanceRepository
     {
         Task<IEnumerable<AttendanceDataModel>> GetAllAsync();
-        Task<IEnumerable<CoursesDTO>> GetCoursesAsync();
+        Task<IEnumerable<CoursesDTO>> GetCRCourses(string email);
         Task<IEnumerable<CoursesDTO>> GetTutorCoursesAsync(string email);
         Task<IEnumerable<AttendanceDataModel?>> GetByCourseIdAsync(int courseId);
         Task<IEnumerable<ValidStudents>> GetValidStudents(List<string> rollNos);

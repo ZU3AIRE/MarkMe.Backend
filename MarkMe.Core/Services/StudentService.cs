@@ -50,6 +50,11 @@ namespace MarkMe.Core.Services
             var updated = await _studRepo.UpdateStudentAsync(updatedObj.StudentId, updatedObj);
             return updated;
         }
+        public async Task<bool> BulkDeleteAsync(IEnumerable<int> ids)
+        {
+            return await _studRepo.BulkDeleteStudentsAsync(ids);
+        }
+
 
         public async Task<IEnumerable<StudentDataModel>> GetStudentsNameAsync()
         {
