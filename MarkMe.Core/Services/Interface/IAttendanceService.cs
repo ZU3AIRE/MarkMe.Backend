@@ -17,6 +17,5 @@ namespace MarkMe.Core.Services.Interface
         Task<IEnumerable<dynamic>> GetByPrompt(PromptAttendance prompt);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate);
-        Task<bool> RegisterFace(StudentImages stdImg);
     }
 }
