@@ -20,4 +20,9 @@
     <ProjectReference Include="..\MarkMe.Core\MarkMe.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+
 </Project>

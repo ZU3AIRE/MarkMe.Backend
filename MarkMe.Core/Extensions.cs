@@ -18,6 +18,7 @@ namespace MarkMe.Core
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
+            services.AddScoped<HttpClient>();
 
             services.AddScoped<IAttendanceService, AttendanceService>();
             services.AddScoped<ICourseService, CourseService>();

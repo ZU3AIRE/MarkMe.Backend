@@ -17,5 +17,9 @@ namespace MarkMe.Core.Services.Interface
         Task<IEnumerable<dynamic>> GetByPrompt(PromptAttendance prompt);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateAsync(DateTime date);
         Task<IEnumerable<AttendanceDataModel>> GetAttendanceByDateRangeAsync(DateTime startDate, DateTime endDate);
+        Task<FaceRegistrationResult> RegisterFace(StudentImages stdImg);
+        Task<FaceRegistrationResult> UpdateFace(StudentImages stdImg);
+        Task<List<StudentFaceGallery>> GetStudentFaceGallery();
+        Task<bool> DeleteStudentFacesAsync(int studentId);
     }
 }

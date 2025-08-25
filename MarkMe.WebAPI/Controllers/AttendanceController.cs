@@ -153,5 +153,54 @@ namespace MarkMe.WebAPI.Controllers
             var attendances = await _attendanceService.GetAttendanceByDateRangeAsync(startDate, endDate);
             return (attendances != null) ? Ok(attendances) : NotFound();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFaceGallery()
+        {
+            var res = await _attendanceService.GetStudentFaceGallery();
+            return Ok(res);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterFace(StudentImages stdImg)
+        {
+            if (stdImg.Images == null || stdImg.Images.Length == 0)
+                return BadRequest("No image uploaded.");
+
+            var result = await _attendanceService.RegisterFace(stdImg);
+
+            if (result.Success)
+                return Ok(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFace(StudentImages stdImg)
+        {
+            if (stdImg.Images == null || stdImg.Images.Length == 0)
+                return BadRequest("No image uploaded.");
+
+            var result = await _attendanceService.UpdateFace(stdImg);
+
+            if (result.Success)
+                return Ok(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFaces(int studentId)
+        {
+            if (studentId == 0)
+                return BadRequest("No StudentId is given.");
+
+            var result = await _attendanceService.DeleteStudentFacesAsync(studentId);
+
+            if (result)
+                return Ok(result);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, result);
+        }
     }
 }

@@ -29,4 +29,11 @@ namespace MarkMe.Core.DTOs
         public string Section { get; set; }
         public string Email { get; set; }
     }
+
+    public class StudentDataModel
+    {
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
+    }
+
 }

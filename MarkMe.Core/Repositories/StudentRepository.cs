@@ -99,5 +99,15 @@ namespace MarkMe.Core.Repositories
             }
         }
 
+        public async Task<IEnumerable<StudentDataModel>> GetStudentsNameAsync(string[] studentIds)
+        {
+            var sql = """
+                SELECT StudentId, CONCAT(FirstName, ' ', LastName) AS StudentName FROM Students WHERE StudentId NOT IN @StudentIds;
+                """;
+
+            var students = await _database.QueryAsync<StudentDataModel>(sql, new {StudentIds = studentIds });
+            return students;
+        }
+
     }
 }
