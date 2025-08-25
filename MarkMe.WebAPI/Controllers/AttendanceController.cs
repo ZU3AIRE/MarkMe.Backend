@@ -34,7 +34,12 @@ namespace MarkMe.WebAPI.Controllers
                 var attend = await _attendanceService.GetTutorCourses(userEmail);
                 return (attend != null) ? Ok(attend) : NotFound();
             }
-            return Forbid("Unable to Authenticate.");
+            else if(User.IsInRole("admin"))
+            {
+                var attend = await _attendanceService.GetAdminCourses();
+                return (attend != null) ? Ok(attend) : NotFound();
+            }
+                return Forbid("Unable to Authenticate.");
         }
 
         [HttpPost]

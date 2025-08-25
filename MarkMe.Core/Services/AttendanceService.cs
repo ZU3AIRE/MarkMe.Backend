@@ -32,6 +32,11 @@ namespace MarkMe.Core.Services
             return await _attendanceRepository.GetTutorCoursesAsync(email);
         }
 
+        public async Task<IEnumerable<CoursesDTO>> GetAdminCourses()
+        {
+            return await _attendanceRepository.GetAdminCoursesAsync();
+        }
+
         public async Task<IEnumerable<AttendanceDataModel?>> GetByCourseId(int courseId)
         {
             return await _attendanceRepository.GetByCourseIdAsync(courseId);

@@ -3,6 +3,8 @@ using Clerk.BackendAPI;
 using MarkMe.Core.DTOs;
 using MarkMe.Core.Repositories.Interface;
 using MarkMe.Core.Services.Interface;
+using System.Threading.Tasks;
+using Azure;
 
 namespace MarkMe.Core.Services
 {
@@ -16,14 +18,14 @@ namespace MarkMe.Core.Services
             return crs;
         }
 
-        public async Task<CRDTO> AddAsync(AddUpdateCRDTO obj)
+        public async Task<CRDTO> AddAsync(AddUpdateCRDTO obj, string currentUserEmail)
         {
             try
             {
                 var stu = await _sRepo.GetStudentAsync(obj.StudentId);
                 if (stu is not null ? await CreateClerkUserAsync(stu.Email, stu.FirstName, stu.LastName, new Guid().ToString()) : false)
                 {
-                    var cr = await _repo.AddAsync(obj);
+                    var cr = await _repo.AddAsync(obj, currentUserEmail);
                     return cr;
                 }
             }
@@ -35,9 +37,9 @@ namespace MarkMe.Core.Services
 
         }
 
-        public async Task UpdateAsync(AddUpdateCRDTO obj)
+        public async Task UpdateAsync(AddUpdateCRDTO obj, string email)
         {
-            await _repo.UpdateAsync(obj);
+            await _repo.UpdateAsync(obj, email);
         }
 
         public async Task<CRDTO?> GetAsync(int studentId)
@@ -59,14 +61,14 @@ namespace MarkMe.Core.Services
 
         public async Task<bool> CreateClerkUserAsync(string email, string firstName, string lastName, string password)
         {
-            int randomTwoDigit = Convert.ToInt32(new Random().Next(99));
+            string randomTwoDigit = new Random().Next(10, 99).ToString();
             var newUserRequest = new CreateUserRequestBody()
             {
                 EmailAddress = new List<string> { email },
                 FirstName = firstName,
                 LastName = lastName,
-                Password = "pASSWORD@#122" + Guid.NewGuid(),
-                Username = $"{firstName.ToLower().ToArray().FirstOrDefault()}{lastName.ToLower()}{randomTwoDigit}",
+                Password = $"paSSword@{randomTwoDigit}{Guid.NewGuid():N}",
+                Username = $"{(string.IsNullOrEmpty(firstName) ? "" : firstName.Substring(0, 1).ToLower())}{lastName?.ToLower()}{randomTwoDigit}",
                 SkipPasswordChecks = false,
                 SkipPasswordRequirement = false,
                 PublicMetadata = new Dictionary<string, object>() {

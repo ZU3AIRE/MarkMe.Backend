@@ -7,29 +7,36 @@ namespace MarkMe.Core.Repositories
 {
     public class CRRepository(IDatabase _database) : ICRRepository
     {
-        public async Task<CRDTO> AddAsync(AddUpdateCRDTO obj)
+        public async Task<CRDTO> AddAsync(AddUpdateCRDTO obj, string currentUserEmail)
         {
             var sql = """
                 INSERT INTO ClassRepresentatives (StudentId, CourseId, IsDeleted, NominatedBy) 
-                VALUES(@StudentId, @CourseId, 0, 1);
+                VALUES(@StudentId, @CourseId, 0, (Select UserId from Users where Email = @CurrentUser));
+
+                INSERT INTO Users (FirstName, LastName, Email, Password, IsDeleted)
+                VALUES (
+                    (SELECT FirstName FROM Students WHERE StudentId = @StudentId),
+                    (SELECT LastName FROM Students WHERE StudentId = @StudentId),
+                    (SELECT Email FROM Students WHERE StudentId = @StudentId),
+                    'DefaultPassword123!', 0);
              """;
 
-            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj.CourseIds.Select(courseId => new { StudentId = obj.StudentId, CourseId = courseId }));
+            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj.CourseIds.Select(courseId => new { StudentId = obj.StudentId, CourseId = courseId, CurrentUser = currentUserEmail }));
 
             // Query Added
             var crDTO = await GetAsync(obj.StudentId);
             return crDTO!;
         }
 
-        public async Task UpdateAsync(AddUpdateCRDTO obj)
+        public async Task UpdateAsync(AddUpdateCRDTO obj, string email)
         {
             var deleted = await _database.ExecuteAsync("DELETE FROM ClassRepresentatives WHERE StudentId = @StudentId", new { obj.StudentId });
             var sql = """
                 INSERT INTO ClassRepresentatives (StudentId, CourseId, IsDeleted, NominatedBy) 
-                VALUES(@StudentId, @CourseId, 0, 1);
+                VALUES(@StudentId, @CourseId, 0, (Select UserId from Users where Email = @Email));
              """;
 
-            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj.CourseIds.Select(courseId => new { obj.StudentId, CourseId = courseId }));
+            var rowsAffected = await _database.ExecuteAsync(sql, parameters: obj.CourseIds.Select(courseId => new { obj.StudentId, CourseId = courseId, Email = email }));
         }
 
         public async Task<IEnumerable<CRDTO>> GetAllAsync()
@@ -89,7 +96,9 @@ namespace MarkMe.Core.Repositories
         {
             var sql = """ 
                         DELETE FROM ClassRepresentatives
-                        WHERE StudentId = @StudentId
+                        WHERE StudentId = @StudentId;
+                        DELETE FROM Users 
+                        WHERE Email = (Select Email From Students Where StudentId = @StudentId)
                     """;
             var rowsAffected = await _database.ExecuteAsync(sql, new { StudentId = studentId });
             return rowsAffected > 0;
