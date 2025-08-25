@@ -15,10 +15,10 @@ namespace MarkMe.Core.Repositories
                 INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked, Status)
                 VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), @DateMarked, @AttendanceStatus)
 
-                IF EXISTS(Select * from Users where Email =@Email AND UserId = 3)
+                IF EXISTS(Select * from Users where Email =@Email)
                 BEGIN
                     INSERT INTO Activities (Description, Date, ClassRepresentativeStudentId, ClassRepresentativeCourseId)
-                    Values (@description, @DateMarked, 2, @CourseId)
+                    Values (@description, @DateMarked, (Select StudentId from Students Where Email = @Email), @CourseId)
                 END
                 """;
             var parameters = obj.StudentIds.Select(studentId => new
@@ -147,6 +147,14 @@ namespace MarkMe.Core.Repositories
                 Select CourseId, Code AS CourseCode, Title AS CourseName from Courses Where AssignedTo = (Select UserId from Users where Email =@Email)
                 """;
             return await _database.QueryAsync<CoursesDTO>(sql, new { Email = email });
+        }
+
+        public async Task<IEnumerable<CoursesDTO>> GetAdminCoursesAsync()
+        {
+            var sql = """
+                Select CourseId, Code AS CourseCode, Title AS CourseName from Courses;
+                """;
+            return await _database.QueryAsync<CoursesDTO>(sql);
         }
 
         public async Task<IEnumerable<ValidStudents>> GetValidStudents(List<string> rollNos)

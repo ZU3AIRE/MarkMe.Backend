@@ -2,11 +2,12 @@
 using MarkMe.Core.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MarkMe.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize(Roles = "tutor")]
+    [Authorize(Roles = "tutor,admin")]
     [ApiController]
     public class CRController(ICRService _crService) : ControllerBase
     {
@@ -32,15 +33,31 @@ namespace MarkMe.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> NominateCR(AddUpdateCRDTO cr)
         {
-            var createdCR = await _crService.AddAsync(cr);
-            return CreatedAtAction(nameof(GetCRById), new { studentId = cr.StudentId }, createdCR);
+            if(User.IsInRole("tutor") || User.IsInRole("admin"))
+            {
+                var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                var createdCR = await _crService.AddAsync(cr, email);
+                return CreatedAtAction(nameof(GetCRById), new { studentId = cr.StudentId }, createdCR);
+            }
+            else
+            {
+                return Forbid("Unable to Authenticate.");
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> UpdateCR(AddUpdateCRDTO cr)
         {
-            await _crService.UpdateAsync(cr);
-            return NoContent();
+            if (User.IsInRole("tutor") || User.IsInRole("admin"))
+            {
+                var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                await _crService.UpdateAsync(cr, email);
+                return NoContent();
+            }
+            else
+            {
+                return Forbid("Unable to Authenticate.");
+            }
         }
 
         [HttpGet("{studentId}/{isDisabled}")]
