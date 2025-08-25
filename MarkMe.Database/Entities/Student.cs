@@ -24,7 +24,6 @@ namespace MarkMe.Database.Entities
 
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
-        public Guid PersonId { get; set; } = Guid.Empty;
 
         [StringLength(9, ErrorMessage = "Session cannot be longer than 9 characters.")]
         public string Session { get; set; } = string.Empty;

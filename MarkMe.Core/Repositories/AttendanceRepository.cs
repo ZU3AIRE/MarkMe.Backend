@@ -193,5 +193,22 @@ namespace MarkMe.Core.Repositories
             """;
             return await _database.QueryAsync<AttendanceDataModel>(sql, new { StartDate = startDate, EndDate = endDate });
         }
+
+        public async Task<IEnumerable<StudentFaceGallery>> GetStudents(string[] ids)
+        {
+            try
+            {
+                var sql = """
+                Select s.StudentId, s.FirstName, s.LastName, s.Session, s.Email, s.CollegeRollNo From Students s 
+                Where s.StudentId IN @StudentId
+                """;
+                var students = await _database.QueryAsync<StudentFaceGallery>(sql, new { StudentId = ids });
+                return students;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

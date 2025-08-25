@@ -6,11 +6,6 @@ using OpenAI.Chat;
 using Azure.AI.OpenAI;
 using System.ClientModel;
 using Newtonsoft.Json;
-using Azure;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Net;
-using System.IO;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 
 
 namespace MarkMe.Core.Services
@@ -18,7 +13,8 @@ namespace MarkMe.Core.Services
     public class AttendanceService(IAttendanceRepository _attendanceRepository,
         ICourseRepository _courseRepository,
         IConfiguration _configuration,
-        IStudentRepository _studentRepo) : IAttendanceService
+        IStudentRepository _studentRepo,
+        HttpClient _httpClient) : IAttendanceService
     {
         public async Task<IEnumerable<AttendanceDataModel>> GetAllAsync()
         {
@@ -183,5 +179,171 @@ namespace MarkMe.Core.Services
         {
             return await _attendanceRepository.GetAttendanceByDateRangeAsync(startDate, endDate);
         }
+
+        public async Task<FaceRegistrationResult> RegisterFace(StudentImages std)
+        {
+            var url = _configuration["FaceApi:BaseUrl"];
+            using var content = new MultipartFormDataContent();
+
+            // Add images to the request
+            foreach (var image in std.Images)
+            {
+                var streamContent = new StreamContent(image.OpenReadStream());
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
+                content.Add(streamContent, "images", image.FileName);
+            }
+
+            // Add studentId
+            content.Add(new StringContent(std.StudentId.ToString()), "studentId");
+
+            try
+            {
+                var response = await _httpClient.PostAsync($"{url}api/faces/register", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new FaceRegistrationResult
+                    {
+                        Success = true,
+                        Message = "Face registered successfully."
+                    };
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return new FaceRegistrationResult
+                    {
+                        Success = false,
+                        Message = $"Face registration failed: {errorMessage}"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new FaceRegistrationResult
+                {
+                    Success = false,
+                    Message = $"Error calling Python API: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<FaceRegistrationResult> UpdateFace(StudentImages std)
+        {
+            var url = _configuration["FaceApi:BaseUrl"];
+            using var content = new MultipartFormDataContent();
+
+            // Add images to the request
+            foreach (var image in std.Images)
+            {
+                var streamContent = new StreamContent(image.OpenReadStream());
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
+                content.Add(streamContent, "images", image.FileName);
+            }
+
+            try
+            {
+                var response = await _httpClient.PostAsync($"{url}api/faces/update/{std.StudentId}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new FaceRegistrationResult
+                    {
+                        Success = true,
+                        Message = "Face updated successfully."
+                    };
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return new FaceRegistrationResult
+                    {
+                        Success = false,
+                        Message = $"Face updation failed: {errorMessage}"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new FaceRegistrationResult
+                {
+                    Success = false,
+                    Message = $"Error calling Python API: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<List<StudentFaceGallery>> GetStudentFaceGallery()
+        {
+            var APIurl = _configuration["FaceApi:BaseUrl"];
+            var personUrl = _configuration["FaceApi:PersonsUrl"];
+            try
+            {
+                var response = await _httpClient.GetAsync($"{APIurl}api/faces/gallery");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var faceGallery = JsonConvert.DeserializeObject<FaceGallery>(content);
+
+                    var studentIds = faceGallery.Students
+                        .Select(s => s.StudentId)
+                        .Where(id => !string.IsNullOrWhiteSpace(id) && id.All(char.IsDigit))
+                        .ToArray();
+
+                    var studentDetails = await _attendanceRepository.GetStudents(studentIds);
+
+                    // Merge faces into student details and extend face URLs
+                    var result = studentDetails.Select(std =>
+                    {
+                        var faceInfo = faceGallery.Students.FirstOrDefault(f => f.StudentId == std.StudentId);
+                        var extendedImages = faceInfo?.Faces?
+                            .Select(face => $"{personUrl}/{std.StudentId}/{face}")
+                            .ToList();
+
+                        return new StudentFaceGallery
+                        {
+                            StudentId = std.StudentId,
+                            FirstName = std.FirstName,
+                            LastName = std.LastName,
+                            Email = std.Email,
+                            CollegeRollNo = std.CollegeRollNo,
+                            Session = std.Session,
+                            Images = extendedImages
+                        };
+                    }).ToList();
+
+                    return result;
+                }
+
+                return new List<StudentFaceGallery>();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> DeleteStudentFacesAsync(int studentId)
+        {
+            var url = _configuration["FaceApi:BaseUrl"];
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"{url}api/faces/student/{studentId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
+            
 }

@@ -48,4 +48,21 @@ namespace MarkMe.Core.DTOs
         public string StudentId { get; set; }
         public IFormFile[] Images { get; set; }
     }
+
+    public class StudentFaceGallery
+    {
+        public string StudentId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string CollegeRollNo { get; set; }
+        public string Session { get; set; }
+        public List<string>? Images { get; set; }
+    }
+
+    public class FaceRegistrationResult
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
 }
