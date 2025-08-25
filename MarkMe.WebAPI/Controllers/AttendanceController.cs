@@ -162,22 +162,36 @@ namespace MarkMe.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFaceGallery()
         {
-            var res = await _attendanceService.GetStudentFaceGallery();
-            return Ok(res);
+            if(User.IsInRole("tutor") || User.IsInRole("admin"))
+            {
+                var res = await _attendanceService.GetStudentFaceGallery();
+                return Ok(res);
+            }
+            else
+            {
+                return Forbid("Unable to Authenticate.");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> RegisterFace(StudentImages stdImg)
         {
-            if (stdImg.Images == null || stdImg.Images.Length == 0)
-                return BadRequest("No image uploaded.");
+            if (User.IsInRole("tutor") || User.IsInRole("admin"))
+            {
+                if (stdImg.Images == null || stdImg.Images.Length == 0)
+                    return BadRequest("No image uploaded.");
 
-            var result = await _attendanceService.RegisterFace(stdImg);
+                var result = await _attendanceService.RegisterFace(stdImg);
 
-            if (result.Success)
-                return Ok(result);
+                if (result.Success)
+                    return Ok(result);
 
-            return StatusCode(StatusCodes.Status500InternalServerError, result);
+                return StatusCode(StatusCodes.Status500InternalServerError, result);
+            }
+            else
+            {
+                return Forbid("Unable to Authenticate.");
+            }
         }
 
         [HttpPost]

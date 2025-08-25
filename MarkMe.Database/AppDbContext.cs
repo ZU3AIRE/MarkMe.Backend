@@ -597,7 +597,6 @@ namespace MarkMe.Database
                 // For Readonly Purposes
                 new Menu { MenuId = 18, Label = "Courses", Url = "courses", Role = Role.Member },
                 new Menu { MenuId = 19, Label = "Students", Url = "students", Role = Role.Member },
-                new Menu { MenuId = 20, Label = "Class Representative", Url = "class-representatives", Role = Role.Member },
             });
         }
     }
