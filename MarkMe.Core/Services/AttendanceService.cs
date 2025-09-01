@@ -42,14 +42,14 @@ namespace MarkMe.Core.Services
             return await _attendanceRepository.GetByCourseIdAsync(courseId);
         }
 
-        public async Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj, string userEmail)
+        public async Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj, string userEmail, bool isCR)
         {
             var course = await _courseRepository.GetAsync(obj.CourseId);
             if (course == null)
             {
                 throw new Exception("Course not found");
             }
-            var attend = await _attendanceRepository.AddAsync(obj, course.Title, userEmail);
+            var attend = await _attendanceRepository.AddAsync(obj, course.Title, userEmail, isCR);
             return attend;
 
 

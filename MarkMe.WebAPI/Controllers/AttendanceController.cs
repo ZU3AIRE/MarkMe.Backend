@@ -53,6 +53,7 @@ namespace MarkMe.WebAPI.Controllers
             try
             {
                 var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                bool cr = User.IsInRole("cr");
                 var rollNumbers = obj.StudentsRollNos.Split(",").Select(r => r.Trim()).ToList();
                 var validStudents = await _attendanceService.GetValidStudentsByRollNumbersAsync(rollNumbers);
                 var validRollNumbers = validStudents.Select(s => s.RollNo).ToList();
@@ -68,7 +69,7 @@ namespace MarkMe.WebAPI.Controllers
 
                 if (validStudents.Any())
                 {
-                    await _attendanceService.AddAsync(attend, email);
+                    await _attendanceService.AddAsync(attend, email, cr);
                 }
                 if (validRollNumbers.Any() && invalidRollNumbers.Any())
                 {
