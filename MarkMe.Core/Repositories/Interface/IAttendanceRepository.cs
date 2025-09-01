@@ -12,6 +12,7 @@ namespace MarkMe.Core.Repositories.Interface
         Task<IEnumerable<AttendanceDataModel>> GetAllAsync();
         Task<IEnumerable<CoursesDTO>> GetCRCourses(string email);
         Task<IEnumerable<CoursesDTO>> GetTutorCoursesAsync(string email);
+        Task<IEnumerable<CoursesDTO>> GetAdminCoursesAsync();
         Task<IEnumerable<AttendanceDataModel?>> GetByCourseIdAsync(int courseId);
         Task<IEnumerable<ValidStudents>> GetValidStudents(List<string> rollNos);
         Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj, string courseTitle, string userEmail, bool isCR);

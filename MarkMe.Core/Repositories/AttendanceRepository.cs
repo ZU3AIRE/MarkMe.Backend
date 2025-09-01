@@ -150,6 +150,14 @@ namespace MarkMe.Core.Repositories
             return await _database.QueryAsync<CoursesDTO>(sql, new { Email = email });
         }
 
+        public async Task<IEnumerable<CoursesDTO>> GetAdminCoursesAsync()
+        {
+            var sql = """
+                Select CourseId, Code AS CourseCode, Title AS CourseName from Courses;
+                """;
+            return await _database.QueryAsync<CoursesDTO>(sql);
+        }
+
         public async Task<IEnumerable<ValidStudents>> GetValidStudents(List<string> rollNos)
         {
             var sql = """
