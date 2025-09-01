@@ -7,7 +7,7 @@ namespace MarkMe.Core.Repositories
 {
     public class AttendanceRepository(IDatabase _database) : IAttendanceRepository
     {
-        public async Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj, string courseTitle, string userEmail)
+        public async Task<IEnumerable<AttendanceDataModel>> AddAsync(AttendanceDTO obj, string courseTitle, string userEmail, bool isCR)
         {
             // In place of Class Representative Student Id we will use when the login of the CR will be created and then we will use it's id.
             var description = $"Marked Attendance for {courseTitle}.";
@@ -15,10 +15,10 @@ namespace MarkMe.Core.Repositories
                 INSERT INTO Attendances (StudentId, CourseId, MarkedBy, DateMarked, Status)
                 VALUES (@StudentId, @CourseId, (Select UserId from Users where Email =@Email), @DateMarked, @AttendanceStatus)
 
-                IF EXISTS(Select * from Users where Email =@Email AND UserId = 3)
+                IF EXISTS(Select * from Users where Email =@Email AND @isCR = 1)
                 BEGIN
                     INSERT INTO Activities (Description, Date, ClassRepresentativeStudentId, ClassRepresentativeCourseId)
-                    Values (@description, @DateMarked, 2, @CourseId)
+                    Values (@description, @DateMarked, (Select StudentId from Students Where Email = @Email), @CourseId)
                 END
                 """;
             var parameters = obj.StudentIds.Select(studentId => new
@@ -28,7 +28,8 @@ namespace MarkMe.Core.Repositories
                 Email = userEmail,
                 obj.DateMarked,
                 description,
-                obj.AttendanceStatus
+                obj.AttendanceStatus,
+                isCR
             });
 
             var rowsAffected = await _database.ExecuteAsync(sql, parameters);
